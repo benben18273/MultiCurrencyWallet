@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer'
-import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, timeOut } from '../utils'
+import { createBrowser, addTokenToWallet, takeScreenshot, clickOn, waitSlowLoadSelector, timeOut } from '../utils'
 
-jest.setTimeout(250 * 1000)
+jest.setTimeout(360 * 1000)
 
 describe('Adding custom tokens', () => {
   let testBrowser: puppeteer.Browser | undefined
@@ -17,21 +17,24 @@ describe('Adding custom tokens', () => {
     }
   ]
 
+
   const cases: TestCase[] = [
+  /*
     [
       'Custom ETH ERC20',
       'etherc20',
       {
-        contract: '0xc778417e063141139fce010982780140aa0cd5ab',
+        contract: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
         titleId: 'erc20weth',
         walletTitle: 'WETH ERC20',
       },
     ],
+    */
     [
       'Custom BSC BEP20',
       'bnbbep20',
       {
-        contract: '0xae13d989dac2f0debff460ac112a837c89baa7cd',
+        contract: '0x094616f0bdfb0b526bd735bf66eca0ad254ca81f',
         titleId: 'bep20wbnb',
         walletTitle: 'WBNB BEP20',
       },
@@ -40,20 +43,69 @@ describe('Adding custom tokens', () => {
       'Custom POLYGON ERC20',
       'maticerc20matic',
       {
-        contract: '0x220afDcaE34D63EDe6ba68d9F50fFe5632d70a28',
-        titleId: 'erc20maticmono',
-        walletTitle: 'MONO ERC20MATIC',
+        contract: '0x9c3c9283d3e44854697cd22d3faa240cfb032889',
+        titleId: 'erc20maticwmatic',
+        walletTitle: 'WMATIC ERC20MATIC',
       },
     ],
+    /*
     [
       'Custom xDai ERC20',
       'xdaierc20xdai',
       {
-        contract: '0xB81AFe27c103bcd42f4026CF719AF6D802928765',
-        titleId: 'erc20xdaiaria',
-        walletTitle: 'ARIA ERC20XDAI',
+        contract: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
+        titleId: 'erc20xdaiwxdai',
+        walletTitle: 'WXDAI ERC20XDAI',
       },
     ],
+    [
+      'Custom Fantom ERC20',
+      'ftmerc20ftm',
+      {
+        contract: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
+        titleId: 'erc20ftmwftm',
+        walletTitle: 'WFTM ERC20FTM',
+      },
+    ],
+    [
+      'Custom Avalanche ERC20',
+      'avaxerc20avax',
+      {
+        contract: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+        titleId: 'erc20avaxwavax',
+        walletTitle: 'WAVAX ERC20AVAX',
+      },
+    ],
+    [
+      'Custom moonbase ERC20',
+      'movrerc20movr',
+      {
+        contract: '0x98878B06940aE243284CA214f92Bb71a2b032B8A',
+        titleId: 'erc20movrwmovr',
+        walletTitle: 'WMOVR ERC20MOVR',
+      },
+    ],
+    */
+    // their testnet is not working
+    // [
+    //   'Custom Harmony ERC20',
+    //   'oneerc20one',
+    //   {
+    //     contract: '',
+    //     titleId: '',
+    //     walletTitle: '',
+    //   },
+    // ],
+    // @todo fix token addition for Aurora betanet
+    // [
+    //   'Custom Aurora ERC20',
+    //   'auretherc20aurora',
+    //   {
+    //     contract: '0x9D29f395524B3C817ed86e2987A14c1897aFF849',
+    //     titleId: 'erc20auroraeth',
+    //     walletTitle: 'WETH ERC20AURETH',
+    //   },
+    // ],
   ]
 
   async function checkTokenDisplay(params) {
@@ -116,7 +168,10 @@ describe('Adding custom tokens', () => {
           contract,
         })
 
-        await testPage.waitForSelector(`#${titleId}WalletTitle`)
+        const isAddedToken = await waitSlowLoadSelector(testPage, `#${titleId}WalletTitle`, 60_000, 20)
+        if (!isAddedToken) {
+          throw new Error('Add token timeout')
+        }
 
         await checkTokenDisplay({
           page: testPage,

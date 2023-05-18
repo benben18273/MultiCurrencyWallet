@@ -24,6 +24,18 @@
   erc20avax: {
     address: '',
   },
+  erc20movr: {
+    address: '',
+  },
+  erc20one: {
+    address: '',
+  },
+  erc20ame: {
+    address: '',
+  },
+  erc20aurora: {
+    address: '',
+  },
 } */
 
 window.widgetEvmLikeTokens = [
@@ -92,11 +104,17 @@ window.buildOptions = {
     bnb: true,
     matic: true,
     arbeth: true,
+    aureth: true,
     xdai: true,
     ftm: true,
     avax: true,
+    movr: true,
+    one: true,
+    ame: true,
     ghost: true,
-    next: true,
+    next: false,
+    phi: true,
+    phi_v2: true,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -104,11 +122,17 @@ window.buildOptions = {
     bnb: true,
     matic: false,
     arbeth: false,
+    aureth: false,
     xdai: false,
     ftm: true,
     avax: true,
+    movr: true,
+    one: true,
+    ame: true,
     ghost: false,
     next: false,
+    phi: false,
+    phi_v2: false,
   },
   defaultExchangePair: {
     buy: '{eth}wbtc',
@@ -137,6 +161,18 @@ window.buildOptions = {
     'CUSTOM_ERC20FTM',
     'AVAX',
     'CUSTOM_ERC20AVAX',
+    'MOVR',
+    'CUSTOM_ERC20MOVR',
+    'ONE',
+    'CUSTOM_ERC20ONE',
+    'AME',
+    'CUSTOM_ERC20AME',
+    'AURETH',
+    'CUSTOM_ERC20AURORA',
+    'PHI',
+    'CUSTOM_PHI20',
+    'PHI_V2',
+    'CUSTOM_PHIV20_V2',
   ],
   invoiceEnabled: true, // Allow create invoices
   showWalletBanners: true,

@@ -3,14 +3,17 @@ import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './index.scss'
 import { BlockReasons, Actions } from './types'
+import { API_NAME } from './constants'
 
 function Feedback(props) {
   const {
+    network,
     isSourceMode,
     blockReason,
     baseChainWallet,
     spendedAmount,
-    insufficientBalance,
+    insufficientBalanceA,
+    insufficientBalanceB,
     wrongNetwork,
     needApproveA,
     needApproveB,
@@ -22,7 +25,14 @@ function Feedback(props) {
 
   return (
     <section>
-      {wrongNetwork ? (
+      {!isSourceMode && !API_NAME[network?.networkVersion] ? (
+        <p styleName="dangerousNotice">
+          <FormattedMessage
+            id="aggregatorCannotUseThisNetwork"
+            defaultMessage="Aggregator cannot use this network. Please choose another"
+          />
+        </p>
+      ) : wrongNetwork ? (
         <p styleName="dangerousNotice">
           <FormattedMessage id="incorrectNetwork" defaultMessage="Please choose correct network" />
         </p>
@@ -46,11 +56,20 @@ function Feedback(props) {
             defaultMessage="You do not have native currency balance to pay the transaction fee"
           />
         </p>
-      ) : insufficientBalance ? (
+      ) : insufficientBalanceA ? (
         <p styleName="warningNotice">
           <FormattedMessage
-            id="AlertOrderNonEnoughtBalance"
-            defaultMessage="Please top up your balance before you start the swap"
+            id="topUpCurrencyBalance"
+            defaultMessage="Please top up {currency} balance"
+            values={{ currency: spendedCurrency?.name }}
+          />
+        </p>
+      ) : insufficientBalanceB && sourceAction === Actions.AddLiquidity ? (
+        <p styleName="warningNotice">
+          <FormattedMessage
+            id="topUpCurrencyBalance"
+            defaultMessage="Please top up {currency} balance"
+            values={{ currency: receivedCurrency?.name }}
           />
         </p>
       ) : needApproveA && needApproveB && sourceAction === Actions.AddLiquidity ? (

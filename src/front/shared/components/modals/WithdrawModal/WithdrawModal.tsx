@@ -113,9 +113,15 @@ type WithdrawModalState = {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
+      oneData,
+      phiData,
+      phi_v2Data,
+      ameData,
       btcData,
       ghostData,
       nextData,
@@ -130,9 +136,15 @@ type WithdrawModalState = {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
+      oneData,
+      phiData,
+      phi_v2Data,
+      ameData,
       btcData,
       ghostData,
       nextData,
@@ -286,6 +298,7 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
   }
 
   reportError = (error: IError, details = '-') => {
+    console.error(error)
     feedback.withdraw.failed(`details(${details}) : error message(${error.message})`)
 
     console.group('%c Withdraw', 'color: red;')
@@ -678,10 +691,11 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
 
   handleScan = (data) => {
     if (data) {
-      const address = data.split(':')[1].split('?')[0]
-      const amount = data.split('=')[1]
+      const address = (data.indexOf(':') !== -1) ? data.split(':')[1].split('?')[0] : data
+      const amount = (data.indexOf('=') !== -1) ? data.split('=')[1] : false
 
-      this.setState(() => ({ address, amount }))
+      this.setState(() => ({ address }))
+      if (amount !== false) this.setState(() => ({ amount }))
       this.openScan()
     }
   }
@@ -884,6 +898,8 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
       || !this.addressIsCorrect()
       || selectedItem.isToken && notEnoughForTokenMinerFee
       || notEnoughForPayment
+      // Почему-то сломалось тут. надо проверить настройки ts
+      // @ts-ignore
       || new BigNumber(amount).dp() > currentDecimals
     )
 
@@ -1031,16 +1047,15 @@ class WithdrawModal extends React.Component<WithdrawModalProps, WithdrawModalSta
           {/* why style ? see tip for max button */}
           <p style={usedAdminFee ? { right: '10px' } : undefined} styleName="balance">
             {new BigNumber(amount).isGreaterThan(0) && cryptoCurrencyHaveInfoPrice && (
-              <FormattedMessage
-                id={balanceLabel.id}
-                defaultMessage={balanceLabel.defaultMessage}
-                values={{
-                  amount: selectedValue !== activeFiat
-                    ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
-                    : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
-                  currency: selectedValue !== activeFiat ? activeFiat : activeCryptoCurrency.toUpperCase(),
-                }}
-              />
+              intl.formatMessage({
+                id: balanceLabel.id,
+                defaultMessage: balanceLabel.defaultMessage,
+              }, {
+                amount: selectedValue !== activeFiat
+                  ? new BigNumber(fiatAmount).dp(2, BigNumber.ROUND_CEIL).toNumber()
+                  : new BigNumber(amount).dp(6, BigNumber.ROUND_CEIL).toNumber(),
+                currency: selectedValue !== activeFiat ? activeFiat : activeCryptoCurrency.toUpperCase(),
+              })
             )}
           </p>
 

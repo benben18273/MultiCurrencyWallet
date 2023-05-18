@@ -3,9 +3,13 @@ import eth from './eth.svg'
 import bnb from './bnb.svg'
 import matic from './matic.svg'
 import arbeth from './arbeth.svg'
+import aureth from './aureth.svg'
 import xdai from './xdai.svg'
 import ftm from './ftm.svg'
 import avax from './avax.svg'
+import movr from './movr.svg'
+import one from './one.svg'
+import ame from './ame.png'
 import wbtc from './wbtc.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
@@ -25,6 +29,8 @@ import pay from './pay.png'
 import eurs from './eurs.svg'
 import ghost from './ghost.svg'
 import next from './next.svg'
+import phi from './phi.png'
+import phi_v2 from './phi_v2.png'
 
 
 export default {
@@ -44,9 +50,13 @@ export default {
   bnb,
   matic,
   arbeth,
+  aureth,
   xdai,
   ftm,
   avax,
+  movr,
+  one,
+  ame,
   syc2,
   icx,
   usdt,
@@ -58,4 +68,6 @@ export default {
   eurs,
   ghost,
   next,
+  phi,
+  phi_v2,
 }

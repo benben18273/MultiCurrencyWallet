@@ -17,11 +17,11 @@ import {
   user,
   cacheStorageGet,
   cacheStorageSet,
+  quickswap,
 } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import Link from 'local_modules/sw-valuelink'
-import Button from 'components/controls/Button/Button'
 import {
   ComponentState,
   Direction,
@@ -54,6 +54,13 @@ const QuickswapModes = {
   source: 'source',
   only_aggregator: 'only_aggregator',
   only_source: 'only_source',
+}
+
+const CURRENCY_PLUG = {
+  blockchain: '-',
+  fullTitle: '-',
+  name: '-',
+  notExist: true,
 }
 
 class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
@@ -113,10 +120,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     if (externalConfig.opts.defaultQuickBuy) {
       const defaultBuyCurrency = allCurrencies.filter((curData) => curData.value.toUpperCase() === externalConfig.opts.defaultQuickBuy.toUpperCase())
       if (defaultBuyCurrency.length) [receivedCurrency] = defaultBuyCurrency
-    }
-
-    if (path.match(/\/quick\/createOrder/)) {
-      this.createLimitOrder()
     }
 
     // if we have url parameters then show it as default values
@@ -187,7 +190,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       swapFee: '',
       gasPrice: '',
       gasLimit: '',
-      showOrders: false,
       blockReason: undefined,
       serviceFee: false,
     }
@@ -292,21 +294,26 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   returnCurrentAssetState = (currentCurrencies, activeSection: Sections) => {
     const { allCurrencies } = this.props
 
-    let { currencies, wrongNetwork } = actions.oneinch.filterCurrencies({
+    let { currencies: filteredCurrencies, wrongNetwork } = quickswap.filterCurrencies({
       currencies: allCurrencies,
     })
+    let currencies: any[] = []
 
     if (wrongNetwork) {
-      currencies = currentCurrencies
+      filteredCurrencies = currentCurrencies
     }
 
     if (activeSection === Sections.Aggregator) {
-      currencies = currencies.filter(currency => {
+      currencies = filteredCurrencies.filter(currency => {
         const { coin, blockchain } = getCoinInfo(currency.value)
         const network = externalConfig.evmNetworks[blockchain || coin]
 
-        return !!API_NAME[network.networkVersion]
+        return !!API_NAME[network?.networkVersion]
       })
+    }
+
+    if (!currencies.length) {
+      currencies = filteredCurrencies.length ? filteredCurrencies : [ CURRENCY_PLUG ]
     }
 
     const spendedCurrency = currencies[0]
@@ -314,14 +321,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
     // user doesn't have enough tokens in the wallet. Show a notice about it
     if (!receivedList.length) {
-      receivedList = [
-        {
-          blockchain: '-',
-          fullTitle: '-',
-          name: '-',
-          notExist: true,
-        },
-      ]
+      receivedList = [CURRENCY_PLUG]
     }
 
     const receivedCurrency = receivedList[0]
@@ -344,6 +344,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       && window.zeroxFeePercent >= 0
       && window.zeroxFeePercent <= 100
 
+    // Если клиент уже установил больше 1% - используем принудительно 1%
+    if (window.zeroxFeePercent > 1) window.zeroxFeePercent = 1
     if (currentFeeOpts?.address && correctFeeRepresentation) {
       // percent of the buyAmount >= 0 && <= 1
       const apiPercentFormat = new BigNumber(window.zeroxFeePercent).dividedBy(MAX_PERCENT)
@@ -375,7 +377,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   updateNetwork = async () => {
     const { spendedCurrency } = this.state
 
-    const network =      externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
+    const network = externalConfig.evmNetworks[spendedCurrency.blockchain || spendedCurrency.value.toUpperCase()]
 
     this.updateBaseChainWallet(spendedCurrency)
 
@@ -468,6 +470,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const possibleNoLiquidity = JSON.stringify(error)?.match(/INSUFFICIENT_ASSET_LIQUIDITY/)
     const insufficientSlippage = JSON.stringify(error)?.match(/IncompleteTransformERC20Error/)
     const notEnoughBalance = error.message?.match(/(N|n)ot enough .* balance/)
+    const notApproved = JSON.stringify(error)?.match(/SenderNotAuthorizedError/)
 
     if (possibleNoLiquidity) {
       this.setBlockReason(BlockReasons.NoLiquidity)
@@ -477,6 +480,8 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       this.setBlockReason(BlockReasons.NoBalance)
     } else if (liquidityErrorMessage) {
       this.setBlockReason(BlockReasons.Liquidity)
+    } else if (notApproved) {
+      this.setBlockReason(BlockReasons.NotApproved)
     } else {
       this.setBlockReason(BlockReasons.Unknown)
 
@@ -502,13 +507,17 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       fromWallet.decimals || COIN_DECIMALS,
     )
 
+    const enoughBalanceForSwap = new BigNumber(fromWallet.balance).isGreaterThan(new BigNumber(spendedAmount))
+
     const request = [
       `/swap/v1/quote?`,
-      `takerAddress=${fromWallet.address}&`,
       `buyToken=${buyToken}&`,
       `sellToken=${sellToken}&`,
       `sellAmount=${sellAmount}`,
     ]
+    if (enoughBalanceForSwap) {
+      request.push(`&takerAddress=${fromWallet.address}`)
+    }
 
     if (window?.STATISTICS_ENABLED) {
       request.push(`&affiliateAddress=${externalConfig.swapContract.affiliateAddress}`)
@@ -542,10 +551,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     await this.updateCurrentPairAddress()
     await this.checkApprove(Direction.Spend)
 
-    if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
-      await this.checkApprove(Direction.Receive)
-    }
-
     if (
       activeSection === Sections.Source
       && sourceAction !== Actions.AddLiquidity
@@ -562,6 +567,10 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       await this.fetchSwapAPIData()
     } else if (activeSection === Sections.Source) {
       await this.processingSourceActions()
+      // start approve check only after the received amount request in processingSourceActions()
+      if (activeSection === Sections.Source && sourceAction === Actions.AddLiquidity) {
+        await this.checkApprove(Direction.Receive)
+      }
     }
   }
 
@@ -625,10 +634,15 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   fetchSwapAPIData = async () => {
-    const { network, needApproveA } = this.state
-    const doNotUpdate = this.isApiRequestBlocking() || needApproveA
+    const { network, spendedAmount, isPending } = this.state
 
-    if (doNotUpdate) return
+    const dontFetch = (
+      new BigNumber(spendedAmount).isNaN()
+      || new BigNumber(spendedAmount).isEqualTo(0)
+      || isPending
+    )
+
+    if (dontFetch) return
 
     this.setState(() => ({
       isPending: true,
@@ -704,9 +718,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   processingSourceActions = async () => {
-    const { sourceAction, currentLiquidityPair } = this.state
+    const { sourceAction, currentLiquidityPair, spendedAmount } = this.state
 
-    if (!currentLiquidityPair) return
+    if (!currentLiquidityPair || !spendedAmount) return
 
     switch (sourceAction) {
       case Actions.Swap:
@@ -769,9 +783,9 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       }))
     } catch (error) {
       this.reportError(error)
-    } finally {
-      this.setPending(false)
     }
+
+    this.setPending(false)
   }
 
   setSpendedAmount = (value) => {
@@ -798,18 +812,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
   }
 
   checkApprove = async (direction) => {
-    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } =      this.state
+    const { network, isSourceMode, spendedAmount, receivedAmount, fromWallet, toWallet } = this.state
 
     let amount = spendedAmount
     let wallet = fromWallet
-    const spender = isSourceMode
-      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
-      : externalConfig.swapContract.zerox
 
     if (direction === Direction.Receive) {
       amount = receivedAmount
       wallet = toWallet
     }
+
+    const spender = isSourceMode
+      ? LIQUIDITY_SOURCE_DATA[network.networkVersion]?.router
+      : externalConfig.swapContract.zerox
 
     if (!wallet.isToken) {
       this.setNeedApprove(direction, false)
@@ -841,7 +856,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
     const { spendedCurrency, receivedCurrency } = this.state
 
     const changeSpendedSide = direction === Direction.Spend && spendedCurrency.value !== value.value
-    const changeReceivedSide =      direction === Direction.Receive && receivedCurrency.value !== value.value
+    const changeReceivedSide = direction === Direction.Receive && receivedCurrency.value !== value.value
 
     if (changeSpendedSide) {
       this.setState(
@@ -1047,19 +1062,19 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       gasLimit,
     } = this.state
 
-    const wrongSlippage =      slippage
+    const wrongSlippage = slippage
       && (new BigNumber(slippage).isEqualTo(0)
         || new BigNumber(slippage).isGreaterThan(slippageMaxRange))
 
-    const wrongGasPrice =      new BigNumber(gasPrice).isPositive()
+    const wrongGasPrice = new BigNumber(gasPrice).isPositive()
       && new BigNumber(gasPrice).isGreaterThan(API_GAS_LIMITS.MAX_PRICE)
 
-    const wrongGasLimit =      new BigNumber(gasLimit).isPositive()
+    const wrongGasLimit = new BigNumber(gasLimit).isPositive()
       && (new BigNumber(gasLimit).isLessThan(API_GAS_LIMITS.MIN_LIMIT)
         || new BigNumber(gasLimit).isGreaterThan(API_GAS_LIMITS.MAX_LIMIT))
 
     const wrongSettings = wrongGasPrice || wrongGasLimit || wrongSlippage
-    const noBalance =      baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
+    const noBalance = baseChainWallet.balanceError || new BigNumber(baseChainWallet.balance).isEqualTo(0)
 
     return (
       noBalance
@@ -1073,12 +1088,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
 
   createLimitOrder = () => {
     actions.modals.open(constants.modals.LimitOrder)
-  }
-
-  toggleOrdersViability = () => {
-    this.setState((state) => ({
-      showOrders: !state.showOrders,
-    }))
   }
 
   render() {
@@ -1103,7 +1112,6 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       network,
       swapData,
       swapFee,
-      showOrders,
       blockReason,
       slippage,
       serviceFee,
@@ -1119,25 +1127,25 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
       'receivedAmount',
     )
 
-    const insufficientBalanceA =      new BigNumber(fromWallet.balance).isEqualTo(0)
+    const insufficientBalanceA = new BigNumber(fromWallet.balance).isEqualTo(0)
       || new BigNumber(spendedAmount)
         .plus(fromWallet?.standard ? 0 : swapFee || 0)
         .isGreaterThan(fromWallet.balance)
 
-    const insufficientBalanceB =      new BigNumber(toWallet.balance).isEqualTo(0)
+    const insufficientBalanceB = new BigNumber(toWallet.balance).isEqualTo(0)
       || new BigNumber(receivedAmount).isGreaterThan(toWallet.balance)
 
     return (
       <>
         {onlyAggregator && <TokenInstruction />}
 
-        {receivedCurrency.notExist && (
+        {spendedCurrency.notExist || receivedCurrency.notExist && (
           <p styleName="noAssetsNotice">
             <FormattedMessage
               id="notEnoughAssetsNotice"
               defaultMessage="You don't have available assets for {networkName} to exchange. Please change the network or add a custom asset to the wallet."
               values={{
-                networkName: network.chainName,
+                networkName: network.chainName || 'Unknown network',
               }}
             />
           </p>
@@ -1203,9 +1211,11 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
 
               <Feedback
+                network={network}
                 isSourceMode={isSourceMode}
                 wrongNetwork={wrongNetwork}
                 insufficientBalanceA={insufficientBalanceA}
+                insufficientBalanceB={insufficientBalanceB}
                 blockReason={blockReason}
                 baseChainWallet={baseChainWallet}
                 spendedAmount={spendedAmount}
@@ -1233,24 +1243,7 @@ class QuickSwap extends PureComponent<IUniversalObj, ComponentState> {
               />
             </>
           )}
-
-          {/*
-          Maybe fix some problems with 1inch orders and uncomment all related to orders code
-          or the better way is to complete this issue first and enable orders again:
-          https://github.com/swaponline/MultiCurrencyWallet/issues/4896
-          */}
-          {/* {!wrongNetwork && (this.mnemonicIsSaved() || metamask.isConnected()) && (
-            <Button onClick={this.createLimitOrder} link small>
-              <FormattedMessage id="createLimitOrder" defaultMessage="Create limit order" />
-            </Button>
-          )} */}
         </section>
-
-        {/* <Button id="limitOrdersOrderbookBtn" onClick={this.toggleOrdersViability} link>
-          <FormattedMessage id="limitOrders" defaultMessage="Limit orders" />
-        </Button>
-
-        {showOrders && <LimitOrders />} */}
       </>
     )
   }

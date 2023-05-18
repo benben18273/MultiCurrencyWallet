@@ -162,18 +162,12 @@ const deletedPartialCurrency = (orderId) => {
     (item) => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency
   )
 
-  // currencies which must be all time in the drop
+  // currencies which must be all time in the drop-down
   const premiumCurrencies = [
-    'BTC', 
-    'ETH', 
-    'BNB', 
-    'MATIC', 
-    'ARBETH', 
-    'XDAI',
-    'FTM',
-    'AVAX',
-    'GHOST', 
-    'NEXT', 
+    ...Object.keys(config.enabledEvmNetworks),
+    'BTC',
+    'GHOST',
+    'NEXT',
     'SWAP',
   ]
 
@@ -474,9 +468,15 @@ const getWallets = (options: IUniversalObj = {}) => {
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
+      oneData,
+      phiData,
+      phi_v2Data,
+      ameData,
       tokensData,
       metamaskData,
     },
@@ -485,6 +485,8 @@ const getWallets = (options: IUniversalObj = {}) => {
   const metamaskConnected = metamask.isEnabled() && metamask.isConnected()
   // if enabledCurrencies equals FALSE then all currencies is enabled
   const enabledCurrencies = config.opts.curEnabled
+
+  if (onlyEvmWallets && !metamaskConnected) return []
 
   const tokenWallets = Object.keys(tokensData).map((k) => {
     const { coin, blockchain } = getCoinInfo(k)
@@ -511,6 +513,11 @@ const getWallets = (options: IUniversalObj = {}) => {
       || enabledCurrencies.xdai
       || enabledCurrencies.ftm
       || enabledCurrencies.avax
+      || enabledCurrencies.movr
+      || enabledCurrencies.one
+      || enabledCurrencies.phi
+      || enabledCurrencies.phi_v2
+      || enabledCurrencies.ame
         ? metamaskData
           ? [metamaskData]
           : []
@@ -586,6 +593,54 @@ const getWallets = (options: IUniversalObj = {}) => {
           ? [avaxData]
           : []
         : [avaxData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.movr
+      ? metamaskConnected
+        ? withInternal
+          ? [movrData]
+          : []
+        : [movrData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.one
+      ? metamaskConnected
+        ? withInternal
+          ? [oneData]
+          : []
+        : [oneData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.aureth
+      ? metamaskConnected
+        ? withInternal
+          ? [aurethData]
+          : []
+        : [aurethData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.phi
+      ? metamaskConnected
+        ? withInternal
+          ? [phiData]
+          : []
+        : [phiData]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.phi_v2
+      ? metamaskConnected
+        ? withInternal
+          ? [phi_v2Data]
+          : []
+        : [phi_v2Data]
+      : []),
+    // =====================================
+    ...(!enabledCurrencies || enabledCurrencies.ame
+      ? metamaskConnected
+        ? withInternal
+          ? [ameData]
+          : []
+        : [ameData]
       : []),
     // =====================================
     ...((!enabledCurrencies || enabledCurrencies.ghost) && !onlyEvmWallets ? [ghostData] : []),

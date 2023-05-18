@@ -3,28 +3,24 @@ import { util } from 'swap.app'
 import { constants } from 'swap.app'
 import BigNumber from 'bignumber.js'
 import reducers from 'redux/core/reducers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
-
-const NETWORK = process.env.MAINNET ? 'mainnet' : 'testnet'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 
 const getCustomTokenConfig = () => {
   const tokensInfo = JSON.parse(localStorage.getItem('customToken') || '{}')
 
-  if (!Object.keys(tokensInfo).length || !tokensInfo[NETWORK]) {
+  if (!Object.keys(tokensInfo).length || !tokensInfo[config.entry]) {
     return {}
   }
 
-  return tokensInfo[NETWORK]
+  return tokensInfo[config.entry]
 }
 
 const initExternalConfig = () => {
   // Add to swap.core not exists tokens
-  Object.keys(TOKEN_STANDARDS).forEach((key) => {
-    const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-
+  EXISTING_STANDARDS.forEach((standard) => {
     Object.keys(config[standard]).forEach((tokenSymbol) => {
       if (!constants.COIN_DATA[tokenSymbol]) {
-        util[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
+        util.tokenRegistrar[standard].register(tokenSymbol, config[standard][tokenSymbol].decimals)
       }
     })
   })
@@ -43,12 +39,18 @@ const externalConfig = () => {
       bnb: true,
       matic: true,
       arbeth: true,
+      aureth: true,
       xdai: true,
       ftm: true,
       avax: true,
+      movr: true,
+      one: true,
+      ame: true,
+      phi: true,
+      phi_v2: true,
       btc: true,
       ghost: true,
-      next: true,
+      next: false,
     },
     blockchainSwapEnabled: {
       btc: true,
@@ -56,18 +58,26 @@ const externalConfig = () => {
       bnb: false,
       matic: false,
       arbeth: false,
+      aureth: false,
       xdai: false,
       ftm: false,
       avax: false,
+      movr: false,
+      one: false,
+      ame: false,
+      phi: false,
+      phi_v2: false,
       ghost: true,
-      next: true,
+      next: false,
     },
+    L2_EVM_KEYS: ['aureth', 'arbeth'],
     createWalletCoinsOrder: false,
     buyFiatSupported: ['eth', 'matic'],
     defaultExchangePair: {
       buy: '{eth}wbtc',
       sell: 'btc',
     },
+    preventMultiTab: true,
     defaultQuickSell: false,
     ownTokens: false,
     addCustomTokens: true,
@@ -90,7 +100,7 @@ const externalConfig = () => {
     exchangeDisabled: false,
     ui: {
       hideServiceLinks: false,
-      serviceLink: 'https://tools.onout.org/wallet',
+      serviceLink: 'https://onout.org/wallet',
       farmLink: false, // use default link #/marketmaker
       bannersSource: 'https://noxon.wpmix.net/swapBanners/banners.php',
       disableInternalWallet: false,
@@ -124,6 +134,11 @@ const externalConfig = () => {
     },
   }
 
+  if (window
+    && window.SO_AllowMultiTab
+  ) {
+    config.opts.preventMultiTab = false
+  }
   if (window
     && window.SO_FaqBeforeTabs
     && window.SO_FaqBeforeTabs.length
@@ -229,59 +244,41 @@ const externalConfig = () => {
 
 
   // Plugin: enable/disable currencies
-
-  if (window && window.CUR_BTC_DISABLED === true) {
-    config.opts.curEnabled.btc = false
-    config.opts.blockchainSwapEnabled.btc = false
+  if (window && window.CUR_NEXT_DISABLED === false) {
+    config.opts.curEnabled.next = true
+    config.opts.blockchainSwapEnabled.next = true
+  }
+  
+  const wpCurrencyDisabledFlages = {
+    /* WordPress window flag => option key */
+    CUR_BTC_DISABLED: `btc`,
+    CUR_GHOST_DISABLED: `ghost`,
+    CUR_ETH_DISABLED: `eth`,
+    CUR_BNB_DISABLED: `bnb`,
+    CUR_MATIC_DISABLED: `matic`,
+    CUR_ARBITRUM_DISABLED: `arbeth`,
+    CUR_XDAI_DISABLED: `xdai`,
+    CUR_FTM_DISABLED: `ftm`,
+    CUR_AVAX_DISABLED: `avax`,
+    CUR_MOVR_DISABLED: `movr`,
+    CUR_ONE_DISABLED: `one`,
+    CUR_AME_DISABLED: `ame`,
+    CUR_AURORA_DISABLED: `aureth`,
+    CUR_PHI_DISABLED: `phi`,
+    CUR_PHI_V2_DISABLED: `phi_v2`,
+  }
+  if (window) {
+    Object.keys(wpCurrencyDisabledFlages).forEach((windowFlagKey) => {
+      if (window[windowFlagKey] === true) {
+        config.opts.curEnabled[wpCurrencyDisabledFlages[windowFlagKey]] = false
+        config.opts.blockchainSwapEnabled[wpCurrencyDisabledFlages[windowFlagKey]] = false
+      }
+    })
   }
 
-  if (window && window.CUR_GHOST_DISABLED === true) {
-    config.opts.curEnabled.ghost = false
-    config.opts.blockchainSwapEnabled.ghost = false
-  }
-
-  if (window && window.CUR_NEXT_DISABLED === true) {
-    config.opts.curEnabled.next = false
-    config.opts.blockchainSwapEnabled.next = false
-  }
-
-  if (window && window.CUR_ETH_DISABLED === true) {
-    config.opts.curEnabled.eth = false
-    config.opts.blockchainSwapEnabled.next = false
-  }
-
-  if (window && window.CUR_BNB_DISABLED === true) {
-    config.opts.curEnabled.bnb = false
-    config.opts.blockchainSwapEnabled.bnb = false
-  }
-
-  if (window && window.CUR_MATIC_DISABLED === true) {
-    config.opts.curEnabled.matic = false
-    config.opts.blockchainSwapEnabled.matic = false
-  }
-
-  if (window && window.CUR_ARBITRUM_DISABLED === true) {
-    config.opts.curEnabled.arbeth = false
-    config.opts.blockchainSwapEnabled.arbeth = false
-  }
-
-  if (window && window.CUR_XDAI_DISABLED === true) {
-    config.opts.curEnabled.xdai = false
-    config.opts.blockchainSwapEnabled.xdai = false
-  }
-
-  if (window && window.CUR_FTM_DISABLED === true) {
-    config.opts.curEnabled.ftm = false
-    config.opts.blockchainSwapEnabled.ftm = false
-  }
-
-  if (window && window.CUR_AVAX_DISABLED === true) {
-    config.opts.curEnabled.avax = false
-    config.opts.blockchainSwapEnabled.avax = false
-  }
 
   config.enabledEvmNetworks = Object.keys(config.evmNetworks)
-    .filter((key) => config.opts.curEnabled[key.toLowerCase()])
+    .filter((key) => !config.opts.curEnabled || config.opts.curEnabled[key.toLowerCase()])
     .reduce((acc, key) => {
       acc[key] = config.evmNetworks[key]
 
@@ -352,8 +349,7 @@ const externalConfig = () => {
     const wcP = `WIDGETTOKENCODE`
     const wcPe = `#}`
 
-    Object.keys(TOKEN_STANDARDS).forEach((key) => {
-      const standard = TOKEN_STANDARDS[key].standard
+    EXISTING_STANDARDS.forEach((standard) => {
       const ownTokens = {}
 
       Object.keys(config[standard]).forEach((tokenSymbol) => {
@@ -370,6 +366,8 @@ const externalConfig = () => {
     const customTokenConfig = getCustomTokenConfig()
 
     Object.keys(customTokenConfig).forEach((standard) => {
+      if (!config[standard]) return
+
       Object.keys(customTokenConfig[standard]).forEach((tokenContractAddr) => {
         const tokenObj = customTokenConfig[standard][tokenContractAddr]
         const { symbol } = tokenObj
@@ -435,9 +433,8 @@ const externalConfig = () => {
 
     // add currency commissions for tokens
     if (hasTokenAdminFee) {
-      Object.keys(TOKEN_STANDARDS).forEach((key) => {
-        const standard = TOKEN_STANDARDS[key].standard.toLowerCase()
-        const baseCurrency = TOKEN_STANDARDS[key].currency.toLowerCase()
+      EXISTING_STANDARDS.forEach((standard) => {
+        const baseCurrency = TOKEN_STANDARDS[standard].currency.toLowerCase()
         const baseCurrencyFee = config.opts.fee[baseCurrency]
 
         if (!config.opts.fee[standard]) {

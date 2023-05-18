@@ -17,12 +17,12 @@ window.widgetERC20Comisions = {
   eth: {
     fee: '7',
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: '0,01',
+    min: '0,001',
   },
   bnb: {
     fee: '7',
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
-    min: '0,01',
+    min: '0,001',
   },
   matic: {
     fee: '7',
@@ -34,10 +34,15 @@ window.widgetERC20Comisions = {
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,001',
   },
-  xdai: {
+  aureth: {
     fee: '3',
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,001',
+  },
+  xdai: {
+    fee: '3',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+    min: '0,01',
   },
   ftm: {
     fee: '3',
@@ -48,6 +53,21 @@ window.widgetERC20Comisions = {
     fee: '3',
     address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
     min: '0,001',
+  },
+  movr: {
+    fee: '3',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+    min: '0,001',
+  },
+  one: {
+    fee: '3',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+    min: '0,01',
+  },
+  ame: {
+    fee: '3',
+    address: '0x57d49704F453CdD2b995280d9D7F557E42847d82',
+    min: '0,01',
   },
   erc20: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
@@ -65,6 +85,18 @@ window.widgetERC20Comisions = {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
   erc20avax: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  erc20movr: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  erc20one: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  erc20ame: {
+    address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
+  },
+  erc20aurora: {
     address: '0x276747801B0dbb7ba04685BA27102F1B27Ca0815',
   },
 }
@@ -118,11 +150,15 @@ window.buildOptions = {
     bnb: true,
     matic: true,
     arbeth: true,
+    aureth: true,
     xdai: true,
     ftm: true,
     avax: true,
+    movr: true,
+    one: true,
+    ame: true,
     ghost: true,
-    next: true,
+    next: false,
   },
   blockchainSwapEnabled: {
     btc: true,
@@ -130,11 +166,15 @@ window.buildOptions = {
     bnb: true,
     matic: true,
     arbeth: false,
+    aureth: false,
     xdai: false,
     ftm: false,
     avax: false,
+    movr: false,
+    one: false,
+    ame: false,
     ghost: false,
-    next: true,
+    next: false,
   },
   defaultExchangePair: {
     buy: '{eth}usdt',

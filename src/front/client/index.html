@@ -8,7 +8,7 @@
     <meta property="og:image:type" content="image/svg+xml" />
     <meta
       property="og:image"
-      content="https://wiki.swaponline.io/assets/swaponline_io.svg"
+      content="https://swaponline.github.io/swap_logo_256.svg"
     />
     <meta http-equiv="refresh" content="3600">
     <link
@@ -537,7 +537,7 @@
           </div>
           <div class="starter-modal__btn-container">
             <button id="preloaderRestoreBtn" class="starter-modal__btn starter-modal__btn_skip">
-              Restore from 12-word seed
+              Restore Wallet
             </button> 
           </div>
           <div class="starter-modal__link-container">
@@ -769,13 +769,15 @@
         'pl',
         'pt',
         'ko',
+        'ar',
+        'fa',
       ]
 
       const isLangAvailable = lang ? availableLangs.includes(lang.toLowerCase()) : false
       const defaultLanguage = window.defaultLanguage
 
       if (!lang || !isLangAvailable) {
-        if (defaultLanguage) {
+        if (defaultLanguage && availableLangs.includes(defaultLanguage.toLowerCase())) {
           lang = defaultLanguage
         } else {
           const browserLang = getNavigatorLanguage().split("-")[0];
@@ -804,6 +806,8 @@
               pl: 'Ładowanie...',
               pt: 'Carregamento...',
               ko: '로드 중...',
+              ar: 'تحميل...',
+              fa: 'بارگذاری...',
             },
           ],
           afterBackup: [
@@ -816,6 +820,8 @@
               pl: 'Przechowuj frazę odzyskiwania w&nbsp;&nbsp;bezpiecznym miejscu',
               pt: 'Mantenha a sua frase de recuperação dentro&nbsp;seguro',
               ko: '복구 문구를 &nbsp;안전한 장소에 보관하십시오.',
+              ar: 'احتفظ بعبارة الاسترداد في مكان آمن',
+              fa: 'عبارت بازیابی خود را در &nbsp;&nbsp;مکان امن نگه دارید',
             },
             {
               en: "Don't forget where your recovery phrase is&nbsp;saved",
@@ -826,6 +832,8 @@
               pl: 'Nie zapomnij, gdzie&nbsp;jest zapisana fraza odzyskiwania',
               pt: 'Não te esqueças onde está a tua frase de recuperação&nbsp;salva',
               ko: "복구 문구가 저장된 위치를 잊지 마세요.",
+              ar: 'لا تنس مكان حفظ عبارة الاسترداد الخاصة بك',
+              fa: 'فراموش نکنید که &nbsp;عبارت بازیابی شما کجا ذخیره شده است',
             },
           ],
         };
@@ -833,7 +841,8 @@
         const mnemonic = window.localStorage.getItem('testnet:twentywords') || window.localStorage.getItem('mainnet:twentywords');
         const isBackup = mnemonic === `-`;
         const relevantTips = tips[!isBackup ? 'beforeBackup' : 'afterBackup'];
-        const currentTip = relevantTips[Math.floor(Math.random() * relevantTips.length)][locale];
+        const currentTipSource = relevantTips[Math.floor(Math.random() * relevantTips.length)]
+        const currentTip = currentTipSource[locale] ? currentTipSource[locale] : currentTipSource['en'];
         const tipNode = document.getElementById('beforeJSTip');
         tipNode.innerHTML = currentTip;
       })();
@@ -848,6 +857,7 @@
           pl: 'Poczekaj na wczytywanie aplikacji,\n może to potrwać minutę...',
           pt: 'Espere por favor enquanto a aplicação está a carregar,\npode demorar um minuto...',
           ko: '애플리케이션이 로드되는 동안 잠시 기다려 주십시오.\n 1분 정도 걸릴 수 있습니다...',
+          ar: 'الرجاء الانتظار أثناء تحميل التطبيق ، \n قد يستغرق الأمر دقيقة واحدة ...',
         }
         const information = document.getElementById('usersInform');
         information.innerText = informationTexts[locale]
@@ -971,7 +981,7 @@
         window.location.hostname === "swaponline.io"
       ) {
         // used by Loader component
-        window.loaderLogoUrl = "https://wiki.swaponline.io/assets/swaponline_io.svg";
+        window.loaderLogoUrl = "https://swaponline.github.io/swap_logo_256.svg";
         document.getElementById("loaderImg").src = window.loaderLogoUrl;
       } else {
         if (window.logoUrl != '#') {
@@ -984,7 +994,7 @@
 
 
       /* Google Analytics */
-      const isMainDomain = window.location.hostname === 'swaponline.io';
+      const isMainDomain = window.location.hostname === 'insertyourdomainhere.io';
       const isExtension =
         window.location.hostname === 'jbhhiineefefhcaoocmnkbmgfjbhninc';
 
@@ -993,7 +1003,7 @@
         var gtagId;
 
         if (isMainDomain) {
-          gtagId = 'UA-116857031-2';
+          gtagId = 'UA-116857031-2'; 
         }
 
         if (isExtension) {

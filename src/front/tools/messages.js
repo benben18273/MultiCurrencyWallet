@@ -16,6 +16,9 @@ const locales = {
   es: 'Spanish',
   pl: 'Polish',
   pt: 'Portuguese', // Brasil
+  ko: 'Korean',
+  ar: 'Arabic',
+  fa: 'Farsi'
 }
 
 const GLOB_PATTERN = 'src/front/shared/**/*.{js,ts,tsx}'

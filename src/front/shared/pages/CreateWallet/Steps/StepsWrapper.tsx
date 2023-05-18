@@ -29,33 +29,18 @@ export default class StepsWrapper extends Component<any, any> {
       if (!curEnabled || curEnabled.btc) {
         this.defaultStartPack.push({ name: 'BTC', capture: 'Bitcoin' })
       }
-      if (!curEnabled || curEnabled.eth) {
-        this.defaultStartPack.push({ name: 'ETH', capture: 'Ethereum' })
-      }
-      if (!curEnabled || curEnabled.bnb) {
-        this.defaultStartPack.push({ name: 'BNB', capture: 'Binance Coin' })
-      }
-      if (!curEnabled || curEnabled.matic) {
-        this.defaultStartPack.push({ name: 'MATIC', capture: 'Matic token' })
-      }
-      if (!curEnabled || curEnabled.arbeth) {
-        this.defaultStartPack.push({ name: 'ARBETH', capture: 'Arbitrum ETH' })
-      }
-      if (!curEnabled || curEnabled.xdai) {
-        this.defaultStartPack.push({ name: 'XDAI', capture: 'xDai' })
-      }
-      if (!curEnabled || curEnabled.ftm) {
-        this.defaultStartPack.push({ name: 'FTM', capture: 'Fantom' })
-      }
-      if (!curEnabled || curEnabled.avax) {
-        this.defaultStartPack.push({ name: 'AVAX', capture: 'Avalanche' })
-      }
       if (!curEnabled || curEnabled.ghost) {
         this.defaultStartPack.push({ name: 'GHOST', capture: 'Ghost' })
       }
       if (!curEnabled || curEnabled.next) {
         this.defaultStartPack.push({ name: 'NEXT', capture: 'NEXT.coin' })
       }
+
+      Object.values(config.enabledEvmNetworks).forEach(({ currency, chainName }: EvmNetworkConfig) => {
+        if (currency && chainName) {
+          this.defaultStartPack.push({ name: currency, capture: chainName })
+        }
+      })
 
       // Multi token build
       config.opts.ownTokens.forEach((token) => {
@@ -76,6 +61,12 @@ export default class StepsWrapper extends Component<any, any> {
         if (config.erc20xdai) this.defaultStartPack.push({ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' })
         if (config.erc20ftm) this.defaultStartPack.push({ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' })
         if (config.erc20avax) this.defaultStartPack.push({ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' })
+        if (config.erc20movr) this.defaultStartPack.push({ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' })
+        if (config.erc20one) this.defaultStartPack.push({ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' })
+        if (config.erc20ame) this.defaultStartPack.push({ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' })
+        if (config.erc20aurora) this.defaultStartPack.push({ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' })
+        if (config.phi20) this.defaultStartPack.push({ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' })
+        if (config.phi20_v2) this.defaultStartPack.push({ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' })
       }
     }
 
@@ -147,15 +138,19 @@ export default class StepsWrapper extends Component<any, any> {
           } = getCoinInfo(coinInfo)
           let isCustomToken = false
           let customTokenType = ``
+          const tokenStandard = new RegExp(
+            [
+              '^CUSTOM_(',
+              'ERC20|BEP20|PHI20|PHI20_V2|ERC20MATIC|ERC20XDAI|ERC20FTM|',
+              'ERC20AVAX|ERC20MOVR|ERC20ONE|ERC20AME|ERC20AURORA',
+              ')$',
+            ].join('')
+          )
+
           if (
-            coinInfo === `CUSTOM_ERC20`
-            || coinInfo === `CUSTOM_BEP20`
-            || coinInfo === `CUSTOM_ERC20MATIC`
-            || coinInfo === `CUSTOM_ERC20XDAI`
-            || coinInfo === `CUSTOM_ERC20FTM`
-            || coinInfo === `CUSTOM_ERC20AVAX`
+            !!coinInfo.match(tokenStandard)
           ) {
-            [customTokenType] = coinInfo.split(`_`)
+            ;[customTokenType] = coinInfo.split(`_`)
             isCustomToken = true
           }
           Object.keys(packList).forEach((coinIndex) => {

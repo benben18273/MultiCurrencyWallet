@@ -19,11 +19,16 @@ type CreateInvoiceProps = {
     bnbData,
     maticData,
     arbethData,
+    aurethData,
     xdaiData,
     ftmData,
     avaxData,
+    movrData,
+    oneData,
     ghostData,
     nextData,
+    phiData,
+    ameData,
   },
 }) => {
   return {
@@ -33,11 +38,16 @@ type CreateInvoiceProps = {
       bnb: bnbData,
       matic: maticData,
       arbeth: arbethData,
+      aureth: aurethData,
       xdai: xdaiData,
       ftm: ftmData,
       avax: avaxData,
+      movr: movrData,
+      one: oneData,
       ghost: ghostData,
       next: nextData,
+      phi: phiData,
+      ame: ameData,
     }
   }
 })

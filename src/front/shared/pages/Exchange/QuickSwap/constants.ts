@@ -56,4 +56,34 @@ export const LIQUIDITY_SOURCE_DATA = {
     router: config.swapContract.pangolinSwapRouter,
     factory: config.swapContract.pangolinSwapFactory,
   },
+  [config.evmNetworks.MOVR.networkVersion]: {
+    name: 'SushiSwap',
+    router: config.swapContract.sushiSwapRouter,
+    factory: config.swapContract.sushiSwapFactory,
+  },
+  [config.evmNetworks.ONE.networkVersion]: {
+    name: 'ViperSwap',
+    router: config.swapContract.viperSwapRouter,
+    factory: config.swapContract.viperSwapFactory,
+  },
+  [config.evmNetworks.AURETH.networkVersion]: {
+    name: 'Trisolaris',
+    router: config.swapContract.trisolarisRouter,
+    factory: config.swapContract.trisolarisFactory,
+  },
+  [config.evmNetworks.PHI.networkVersion]: {
+    name: 'PHI Swap',
+    router: config.swapContract.phiRouter,
+    factory: config.swapContract.phiFactory,
+  },
+  [config.evmNetworks.PHI_V2.networkVersion]: {
+    name: 'PHIv2 Swap',
+    router: config.swapContract.phi_v2Router,
+    factory: config.swapContract.phi_v2Factory,
+  },
+  [config.evmNetworks.AME.networkVersion]: {
+    name: 'AME Swap',
+    router: config.swapContract.ameRouter,
+    factory: config.swapContract.ameFactory,
+  },
 }

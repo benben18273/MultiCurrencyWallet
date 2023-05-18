@@ -5,9 +5,15 @@ import eth from './eth'
 import bnb from './bnb'
 import matic from './matic'
 import arbeth from './arbeth'
+import aureth from './aureth'
+import phi from './phi'
+import phi_v2 from './phi_v2'
 import xdai from './xdai'
 import ftm from './ftm'
 import avax from './avax'
+import movr from './movr'
+import one from './one'
+import ame from './ame'
 import ethToken from './ethToken'
 import * as user from './user'
 import web3 from './web3'
@@ -26,7 +32,7 @@ import externalConfig from './externalConfig'
 import feedback from './feedback'
 import getPageOffset from './getPageOffset'
 import transactions from './transactions'
-
+import quickswap from './quickswap'
 import { migrate } from './migrations'
 
 import {
@@ -58,9 +64,15 @@ export default {
   bnb,
   matic,
   arbeth,
+  aureth,
+  phi,
+  phi_v2,
   xdai,
   ftm,
   avax,
+  movr,
+  one,
+  ame,
   ghost,
   next,
   ethToken,
@@ -77,9 +89,13 @@ export {
   bnb,
   matic,
   arbeth,
+  aureth,
   xdai,
   ftm,
   avax,
+  movr,
+  one,
+  ame,
   ghost,
   next,
   ethToken,
@@ -123,5 +139,6 @@ export {
   wpLogoutModal,
 
   getPairFees,
+  quickswap,
 }
 export { getItezUrl } from './getItezUrl'

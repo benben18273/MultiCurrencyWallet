@@ -5,7 +5,6 @@ import { abi as PairV2ABI } from '@uniswap/v2-periphery/build/IUniswapV2Pair.jso
 import ethLikeHelper from 'common/helpers/ethLikeHelper'
 import constants from 'common/helpers/constants'
 import utils from 'common/utils'
-import erc20Like from 'common/erc20Like'
 import actions from 'redux/actions'
 
 const ABIS = {
@@ -86,7 +85,8 @@ const getPairAddress = async (params) => {
   try {
     return await factory?.methods.getPair(tokenA, tokenB).call()
   } catch (error) {
-    return error
+    console.error(error)
+    return false
   }
 }
 
@@ -239,31 +239,6 @@ const returnSwapMethod = (params) => {
   }
 }
 
-const checkAndApproveToken = async (params) => {
-  const { standard, token, owner, decimals, spender, amount, tokenName } = params
-
-  const allowance = await erc20Like[standard].checkAllowance({
-    contract: token,
-    decimals,
-    spender,
-    owner,
-  })
-
-  return new Promise(async (res, rej) => {
-    if (new BigNumber(amount).isGreaterThan(allowance)) {
-      const result = await actions[standard].approve({
-        name: tokenName,
-        to: spender,
-        amount,
-      })
-
-      return result instanceof Error ? rej(result) : res(result)
-    }
-
-    res(true)
-  })
-}
-
 const swapCallback = async (params) => {
   const {
     routerAddress,
@@ -330,7 +305,7 @@ const returnAddLiquidityData = async (params) => {
   const lowerTokenB = tokenB.toLowerCase()
   let method: string
   let args: (string | number)[]
-  let value: number | null
+  let value: number = 0
 
   if (
     lowerTokenA === constants.ADDRESSES.EVM_COIN_ADDRESS &&
@@ -378,7 +353,6 @@ const returnAddLiquidityData = async (params) => {
     ]
   } else {
     method = LiquidityMethods.addLiquidity
-    value = null
     args = [
       tokenA,
       tokenB,
@@ -431,14 +405,25 @@ const addLiquidityCallback = async (params) => {
   const txData = router.methods[method](...args).encodeABI()
 
   try {
+    const hexValue = new BigNumber(value).multipliedBy(10 ** 18).toString(16)
+    const gasLimit = await router.methods[method](...args).estimateGas({
+      from: owner,
+      value: `0x${hexValue}`,
+    })
+    const additionGasMultiplier = 1.1
+
     return actions[baseCurrency.toLowerCase()].send({
       to: routerAddress,
       data: txData,
       waitReceipt,
-      amount: value ?? 0,
+      amount: value,
+      gasLimit: new BigNumber(gasLimit).multipliedBy(additionGasMultiplier).toFixed(0) || 0,
     })
   } catch (error) {
-    return error
+    console.group('%c add liquidity', 'color: red')
+    console.error(error)
+    console.groupEnd()
+    return false
   }
 }
 

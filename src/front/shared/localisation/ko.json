@@ -3,7 +3,9 @@
     "id": "menu.exchange",
     "message": "거래소",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -113,7 +115,6 @@
     "message": "진행 중...",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -285,7 +286,6 @@
     "message": "이 버튼을 클릭하면 필드에 사용자의 잔액에서 채굴기 커미션을 뺀 금액{br}이(가) 나타납니다.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -341,7 +341,6 @@
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -457,7 +456,6 @@
     "message": "MAX",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -467,7 +465,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -871,7 +868,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -936,7 +932,6 @@
     "message": "주소가 정확하지 않습니다.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -987,7 +982,6 @@
     "message": "Please note: Fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -995,7 +989,6 @@
     "id": "WithdrawModal256",
     "message": "No less than {minAmount}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1003,7 +996,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1124,7 +1116,9 @@
     "id": "FeeControler49",
     "message": "복사",
     "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx",
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1246,7 +1240,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1610,6 +1603,7 @@
     "message": "계속하다.",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1758,6 +1752,7 @@
     "message": "준비가 되어 있습니다!",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -1929,17 +1924,11 @@
   },
   {
     "id": "Withdrow2223",
-    "message": "SMS 코드",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "SMS 코드"
   },
   {
     "id": "Withdrow2224",
-    "message": "컨펌",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "컨펌"
   },
   {
     "id": "partial-tour-2",
@@ -2082,7 +2071,6 @@
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2214,7 +2202,6 @@
     "message": "유료 표시",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2223,7 +2210,6 @@
     "message": "Or enter the link to the transaction (txid)",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2233,7 +2219,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2322,13 +2307,6 @@
   {
     "id": "WalletRow_Menu_History",
     "message": "역사",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_Exchange",
-    "message": "거래소",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -2478,8 +2456,8 @@
     "id": "addCustomToken",
     "message": "사용자 정의 토큰 추가",
     "files": [
-      "src/front/shared/pages/Wallet/CurrenciesList.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2745,37 +2723,24 @@
     "id": "registerSMSMPlaceHolder",
     "message": "암호 구문(12단어)",
     "files": [
-      "src/front/shared/components/Header/Header.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
     "id": "WithdrawSMS_BroadcastError",
-    "message": "브로드캐스트 트랜잭션 실패 ({errorText})",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "브로드캐스트 트랜잭션 실패 ({errorText})"
   },
   {
     "id": "WithdrawSMS_FailSignByMnemonic",
-    "message": "실패 부호 트랜잭션",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "실패 부호 트랜잭션"
   },
   {
     "id": "WithdrawSMS_NotValidMnemonic",
-    "message": "암호 구문이 올바르지 않습니다.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "암호 구문이 올바르지 않습니다."
   },
   {
     "id": "WithdrawSMS_WrongMnemonic",
-    "message": "암호 구문이 올바르지 않습니다.",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "암호 구문이 올바르지 않습니다."
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -2935,7 +2900,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "12단어 시드로부터 복원",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2943,7 +2909,8 @@
     "message": "12-word backup phrase – also know as 12-words, “backup”, recovery phrase, mnemonic seed, “seed” – is a unique, randomly generated set of words, that are given to you when you create a wallet. The recovery phrase is used to derive, or generate, all the private keys, which are encrypted directly on your device.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2951,7 +2918,8 @@
     "message": "주의! 새 시드를 가져오면 현재 잔액이 재설정됩니다. 당신의 현재 자금을 다른 지갑에 저축하세요.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -4012,8 +3980,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "스왑을 시작하는 동안 잔고를 높이십시오.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4446,13 +4413,6 @@
     "message": "전체 이전비용보다 적은",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
-    ]
-  },
-  {
-    "id": "localStorageBtnCopy",
-    "message": "복사",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
@@ -5948,7 +5908,7 @@
   },
   {
     "id": "aggregatorFeeDescription",
-    "message": "The percentage of the purchase amount that charged as a commission",
+    "message": "수수료로 청구된 구매 금액의 백분율입니다",
     "files": [
       "src/front/shared/pages/Exchange/QuickSwap/UserInfo.tsx"
     ]
@@ -5964,8 +5924,308 @@
     "id": "amountNoMoreThenBalance",
     "message": "금액은 당신의 잔액보다 작아야 합니다.",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Search",
+    "message": "검색",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorCannotUseThisNetwork",
+    "message": "애그리 게이터는이 네트워크를 사용할 수 없습니다. 선택 다른",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "{currency}잔액을 위로 올려주세요",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginContinue",
+    "message": "이해합니다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginLater",
+    "message": "나중에 저장하겠습니다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginNotice",
+    "message": "이제 3개의 비밀 코드를 보여드리겠습니다.{br}이 중 2개 이상을 분실하면 지갑을 복구할 수 없습니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CountSavedSecrets",
+    "message": "저장한 사람은 {total}명 중 {saved}명입니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_MnemoniceDeleted",
+    "message": "Shamir의 Secret-Share 코드를 이미 저장했습니다. {href}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ReadySaveNotice",
+    "message": "저장된 코드를 잃어버리지 마세요",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShareMnemonicTitle",
+    "message": "Shamir's Secret-Share codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShowMnemonicNotice",
+    "message": "이 코드를 저장하십시오. 2개 이상 분실 시 지갑 복구 불가",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_Title",
+    "message": "Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseCopy",
+    "message": "복사",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSave",
+    "message": "구하다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSend",
+    "message": "보내다",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs",
+    "message": "다음에서 복원 Shamir's Secret-Sharing",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip",
+    "message": "Shamir's Secret-Sharing for Mnemonic Codes",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip_withBalance",
+    "message": "조심하세요!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Cancel",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_SelectMethod",
+    "message": "복구 방법 선택",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Title",
+    "message": "지갑 복구",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseMnemonic",
+    "message": "12단어를 사용하여 복구",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseShamirs",
+    "message": "다음을 사용하여 복원 Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Cancel",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_SelectMethod",
+    "message": "방법을 선택하십시오",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Title",
+    "message": "지갑 절약",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseMnemonic",
+    "message": "12단어 저장",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseShamirs",
+    "message": "저장 Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_CancelRestory",
+    "message": "취소",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_DoRestore",
+    "message": "복원",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretOne",
+    "message": "비밀번호 1번 입력",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretTwo",
+    "message": "비밀번호 2번 입력",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_IsDoRestoring",
+    "message": "복원 중",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Ready",
+    "message": "준비가 된",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_ReadyNotice",
+    "message": "이제 BTC, ETH 및 기타 통화를 추가할 수 있습니다.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_RestoreHasError",
+    "message": "복원 중 오류 발생: {errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOne",
+    "message": "비밀 코드 #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOneError",
+    "message": "올바른 비밀번호 1번을 입력하세요.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwo",
+    "message": "비밀 코드 #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwoError",
+    "message": "올바른 비밀번호 #2를 입력하세요.",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Title",
+    "message": "지갑 복구",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "{sitehost}의 Shamir의 비밀 공유 코드 #{number}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "이것은 {tokenBlockchain} 블록체인의 {tokenSymbol} 주소입니다.",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   }
 ]

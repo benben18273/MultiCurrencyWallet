@@ -13,6 +13,12 @@ const defaultCurrencyColors = {
   'xdai': '#48a9a6',
   'ftm': '#11b4ec',
   'avax': '#e84142',
+  'movr': 'white',
+  'one': 'white',
+  'ame': 'white',
+  'aureth': '#ECEEF0',
+  'phi': '#1C0237',
+  'phi_v2': '#1C0237',
   'usdt': '#33a681',
   'ghost': 'black',
   'next': 'white',
@@ -31,17 +37,24 @@ const Coin = function (props: CoinProps) {
     name,
   } = props
 
-  const isIconExist = currencyIcons.includes(name.toLowerCase())
+  const lowerName = name.toLowerCase()
+  const isIconExist = currencyIcons.includes(lowerName)
   const iconSource = web3Icons[name]
   let isIconConfigExist = false
 
   if (
-    config?.erc20[name.toLowerCase()]?.icon
-    || config?.bep20[name.toLowerCase()]?.icon
-    || config?.erc20matic[name.toLowerCase()]?.icon
-    || config?.erc20xdai[name.toLowerCase()]?.icon
-    || config?.erc20ftm[name.toLowerCase()]?.icon
-    || config?.erc20avax[name.toLowerCase()]?.icon
+    config?.erc20[lowerName]?.icon
+    || config?.bep20[lowerName]?.icon
+    || config?.erc20matic[lowerName]?.icon
+    || config?.erc20xdai[lowerName]?.icon
+    || config?.erc20ftm[lowerName]?.icon
+    || config?.erc20avax[lowerName]?.icon
+    || config?.erc20movr[lowerName]?.icon
+    || config?.erc20one[lowerName]?.icon
+    || config?.erc20ame[lowerName]?.icon
+    || config?.erc20aurora[lowerName]?.icon
+    || config?.phi20[lowerName]?.icon
+    || config?.phi20_v2[lowerName]?.icon
   ) {
     isIconConfigExist = true
   }
@@ -55,39 +68,59 @@ const Coin = function (props: CoinProps) {
     height: `${size}px`,
   }
 
-  if (defaultCurrencyColors[name.toLowerCase()]) {
-    style.backgroundColor = defaultCurrencyColors[name.toLowerCase()]
+  if (defaultCurrencyColors[lowerName]) {
+    style.backgroundColor = defaultCurrencyColors[lowerName]
   }
 
-  if (config?.erc20[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.erc20[name.toLowerCase()].iconBgColor
+  if (config?.erc20[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20[lowerName].iconBgColor
   }
 
-  if (config?.bep20[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.bep20[name.toLowerCase()].iconBgColor
+  if (config?.bep20[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.bep20[lowerName].iconBgColor
   }
 
-  if (config?.erc20matic[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.erc20matic[name.toLowerCase()].iconBgColor
+  if (config?.erc20matic[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20matic[lowerName].iconBgColor
   }
 
-  if (config?.erc20xdai[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.erc20xdai[name.toLowerCase()].iconBgColor
+  if (config?.erc20xdai[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20xdai[lowerName].iconBgColor
   }
 
-  if (config?.erc20ftm[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.erc20ftm[name.toLowerCase()].iconBgColor
+  if (config?.erc20ftm[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20ftm[lowerName].iconBgColor
   }
 
-  if (config?.erc20avax[name.toLowerCase()]?.iconBgColor) {
-    style.backgroundColor = config.erc20avax[name.toLowerCase()].iconBgColor
+  if (config?.erc20avax[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20avax[lowerName].iconBgColor
+  }
+
+  if (config?.erc20movr[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20movr[lowerName].iconBgColor
+  }
+
+  if (config?.erc20one[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20one[lowerName].iconBgColor
+  }
+
+  if (config?.erc20ame[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20ame[lowerName].iconBgColor
+  }
+
+  if (config?.erc20aurora[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.erc20aurora[lowerName].iconBgColor
+  }
+
+  if (config?.phi20[lowerName]?.iconBgColor) {
+    style.backgroundColor = config.phi20[lowerName].iconBgColor
   }
 
   // *************************************
 
   if (config?.isWidget && window?.widgetEvmLikeTokens?.length) {
     window.widgetEvmLikeTokens.forEach((token) =>  {
-      if (token.name.toLowerCase() === name.toLowerCase()) {
+      if (token.name.toLowerCase() === lowerName) {
         if (token.icon) isIconConfigExist = true
         if (token.iconBgColor) (style.backgroundColor = token.iconBgColor)
       }
@@ -95,7 +128,7 @@ const Coin = function (props: CoinProps) {
   }
 
   const currencyIconProps = {
-    name: name.toLowerCase(),
+    name: lowerName,
     styleName: '',
     style: {},
     source: iconSource,

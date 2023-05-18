@@ -26,15 +26,6 @@ export type SwapData = {
   sellAmount: string
 }
 
-export type Network = {
-  currency: string
-  chainId: number
-  networkVersion: number
-  chainName: string
-  rpcUrls: string[]
-  blockExplorerUrls: string[]
-}
-
 export enum Sections {
   Aggregator,
   Source,
@@ -58,6 +49,7 @@ export enum BlockReasons {
   NoBaseCurrencyBalance,
   Liquidity,
   PairDoesNotExist,
+  NotApproved,
   Unknown,
 }
 
@@ -93,12 +85,11 @@ export type ComponentState = {
   userDeadline: number
   slippageMaxRange: number
   wrongNetwork: boolean
-  network: Network
+  network: EvmNetworkConfig
   swapData: SwapData | undefined
   swapFee: string
   gasPrice: string
   gasLimit: string
-  showOrders: boolean
   blockReason: BlockReasons | undefined
   liquidityErrorMessage: string
   serviceFee: ServiceFee | false

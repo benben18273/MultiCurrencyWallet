@@ -12,6 +12,9 @@ import externalConfig from 'helpers/externalConfig'
 import metamask from 'helpers/metamask'
 import { feedback, constants, cacheStorageGet, cacheStorageSet, apiLooper } from 'helpers'
 
+// use an ethereum private key for EVM compatible blockchains
+const EVM_PRIVATE_KEY = 'eth'
+
 class EthLikeAction {
   readonly coinName: string
 
@@ -19,9 +22,9 @@ class EthLikeAction {
 
   readonly tickerKey: string // lower case (ex. eth)
 
-  readonly privateKeyName: string
+  readonly privateKeyName: string = EVM_PRIVATE_KEY
 
-  readonly explorerName: string
+  readonly explorerApiName: string
 
   readonly explorerLink: string
 
@@ -43,9 +46,8 @@ class EthLikeAction {
     const {
       coinName,
       ticker,
-      privateKeyName,
       chainId,
-      explorerName,
+      explorerApiName,
       explorerLink,
       explorerApiKey,
       adminFeeObj,
@@ -54,10 +56,9 @@ class EthLikeAction {
 
     this.coinName = coinName
     this.ticker = ticker
-    this.privateKeyName = privateKeyName.toLowerCase()
     this.chainId = chainId
     this.tickerKey = ticker.toLowerCase()
-    this.explorerName = explorerName
+    this.explorerApiName = explorerApiName
     this.explorerLink = explorerLink
     this.explorerApiKey = explorerApiKey
     this.adminFeeObj = adminFeeObj
@@ -119,6 +120,8 @@ class EthLikeAction {
     return new Promise((res, rej) => {
       Web3.eth.getTransaction(hash)
         .then((tx) => {
+          if (!tx) return res(null)
+
           const { from, to, value, gas, gasPrice, blockHash } = tx
 
           const amount = Web3.utils.fromWei(value)
@@ -255,11 +258,16 @@ class EthLikeAction {
         resolve([])
       }
 
+      if (this.explorerApiName === ``) {
+        resolve([])
+        return
+      }
+
       const internalUrl = `?module=account&action=txlistinternal&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
       const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${this.explorerApiKey}`
 
       apiLooper
-        .get(this.explorerName, internalUrl)
+        .get(this.explorerApiName, internalUrl)
         .then((response: any) => {
           if (Array.isArray(response?.result)) {
             const internals: ResponseItem[] = []
@@ -274,7 +282,7 @@ class EthLikeAction {
             })
 
             apiLooper
-              .get(this.explorerName, url)
+              .get(this.explorerApiName, url)
               .then((response: any) => {
                 if (Array.isArray(response.result)) {
                   const transactions = this.formatTransactions({
@@ -391,9 +399,11 @@ class EthLikeAction {
     const recipientIsContract = await this.isContract(to)
 
     gasPrice = gasPrice || (await ethLikeHelper[this.tickerKey].estimateGasPrice({ speed }))
+
+    const defaultGasLimitKey = externalConfig?.L2_EVM_KEYS?.includes(this.tickerKey) ? this.tickerKey : 'evmLike'
     const defaultGasLimit = recipientIsContract
-      ? DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.contractInteract
-      : DEFAULT_CURRENCY_PARAMETERS.evmLike.limit.send
+      ? DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.contractInteract
+      : DEFAULT_CURRENCY_PARAMETERS[defaultGasLimitKey].limit.send
 
     let sendMethod = Web3.eth.sendTransaction
     let txData: any = {
@@ -401,7 +411,6 @@ class EthLikeAction {
       from: Web3.utils.toChecksumAddress(ownerAddress),
       to: to.trim(),
       gasPrice,
-      gas: '0x00',
       value: Web3.utils.toHex(Web3.utils.toWei(String(amount), 'ether')),
     }
 
@@ -435,7 +444,7 @@ class EthLikeAction {
     }
 
     return new Promise((res, rej) => {
-      const receipt = sendMethod(txData)
+      sendMethod(txData)
         .on('transactionHash', (hash) => {
           reducers.transactions.addTransactionToQueue({
             networkCoin: this.ticker,
@@ -446,19 +455,19 @@ class EthLikeAction {
             res({ transactionHash: hash })
           }
         })
-        .on('receipt', (receipt) => waitReceipt && res(receipt))
-        .on('error', (error) => rej(error))
+        .on('receipt', (receipt) => {
+          if (waitReceipt) res(receipt)
 
-      if (this.adminFeeObj && !walletData.isMetamask) {
-        receipt.then(() => {
-          this.sendAdminTransaction({
-            from: Web3.utils.toChecksumAddress(ownerAddress),
-            amount,
-            gasPrice,
-            defaultGasLimit,
-          })
+          if (this.adminFeeObj && !walletData.isMetamask) {
+            this.sendAdminTransaction({
+              from: Web3.utils.toChecksumAddress(ownerAddress),
+              amount,
+              gasPrice,
+              defaultGasLimit,
+            })
+          }
         })
-      }
+        .on('error', (error) => rej(error))
     })
   }
 
@@ -544,7 +553,6 @@ class EthLikeAction {
           console.group('%c tx hash', 'color: green;')
           console.log(hash)
           console.groupEnd()
-          
           if (!toAdmin && !waitReceipt) {
             reducers.transactions.addTransactionToQueue({
               networkCoin: this.ticker,
@@ -585,83 +593,138 @@ class EthLikeAction {
   }
 }
 
+const providers = externalConfig.web3
+
 export default {
   ETH: new EthLikeAction({
     coinName: 'Ethereum',
     ticker: 'ETH',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ETH.chainId,
-    explorerName: 'etherscan',
-    explorerLink: externalConfig.link.etherscan,
+    explorerApiName: 'etherscan',
     explorerApiKey: externalConfig.api.etherscan_ApiKey,
+    explorerLink: externalConfig.link.etherscan,
     adminFeeObj: externalConfig.opts?.fee?.eth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.provider)),
+    web3: new Web3(providers.provider),
   }),
   // use an ethereum private key for EVM compatible blockchains
   BNB: new EthLikeAction({
     coinName: 'Binance Coin',
     ticker: 'BNB',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.BNB.chainId,
-    explorerName: 'bscscan',
-    explorerLink: externalConfig.link.bscscan,
+    explorerApiName: 'bscscan',
     explorerApiKey: externalConfig.api.bscscan_ApiKey,
+    explorerLink: externalConfig.link.bscscan,
     adminFeeObj: externalConfig.opts?.fee?.bnb,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.binance_provider)),
+    web3: new Web3(providers.binance_provider),
   }),
   MATIC: new EthLikeAction({
     coinName: 'MATIC Token',
     ticker: 'MATIC',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.MATIC.chainId,
-    explorerName: 'maticscan',
-    explorerLink: externalConfig.link.maticscan,
+    explorerApiName: 'maticscan',
     explorerApiKey: externalConfig.api.polygon_ApiKey,
+    explorerLink: externalConfig.link.maticscan,
     adminFeeObj: externalConfig.opts?.fee?.matic,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.matic_provider)),
+    web3: new Web3(providers.matic_provider),
   }),
   ARBETH: new EthLikeAction({
     coinName: 'Arbitrum ETH',
     ticker: 'ARBETH',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.ARBETH.chainId,
-    explorerName: 'rinkeby-explorer',
-    explorerLink: externalConfig.link.arbitrum,
+    explorerApiName: 'rinkeby-explorer',
     explorerApiKey: '',
+    explorerLink: externalConfig.link.arbitrum,
     adminFeeObj: externalConfig.opts?.fee?.arbeth,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.arbitrum_provider)),
+    web3: new Web3(providers.arbitrum_provider),
   }),
   XDAI: new EthLikeAction({
     coinName: 'xDai',
     ticker: 'XDAI',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.XDAI.chainId,
-    explorerName: '', // needs for show transactions
-    explorerLink: externalConfig.link.xdai,
+    explorerApiName: '', // needs for show transactions
     explorerApiKey: '',
+    explorerLink: externalConfig.link.xdai,
     adminFeeObj: externalConfig.opts?.fee?.xdai,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.xdai_provider)),
+    web3: new Web3(providers.xdai_provider),
   }),
   FTM: new EthLikeAction({
     coinName: 'Fantom',
     ticker: 'FTM',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.FTM.chainId,
-    explorerName: 'ftmscan',
-    explorerLink: externalConfig.link.ftmscan,
+    explorerApiName: 'ftmscan',
     explorerApiKey: externalConfig.api.ftm_ApiKey,
+    explorerLink: externalConfig.link.ftmscan,
     adminFeeObj: externalConfig.opts?.fee?.ftm,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.ftm_provider)),
+    web3: new Web3(providers.ftm_provider),
   }),
   AVAX: new EthLikeAction({
     coinName: 'Avalanche',
     ticker: 'AVAX',
-    privateKeyName: 'eth',
     chainId: externalConfig.evmNetworks.AVAX.chainId,
-    explorerName: 'avaxscan',
-    explorerLink: externalConfig.link.avaxscan,
+    explorerApiName: 'avaxscan',
     explorerApiKey: externalConfig.api.avax_ApiKey,
+    explorerLink: externalConfig.link.avaxscan,
     adminFeeObj: externalConfig.opts?.fee?.avax,
-    web3: new Web3(new Web3.providers.HttpProvider(externalConfig.web3.avax_provider)),
+    web3: new Web3(providers.avax_provider),
+  }),
+  MOVR: new EthLikeAction({
+    coinName: 'Moonriver',
+    ticker: 'MOVR',
+    chainId: externalConfig.evmNetworks.MOVR.chainId,
+    explorerApiName: 'movrscan',
+    explorerApiKey: externalConfig.api.movr_ApiKey,
+    explorerLink: externalConfig.link.movrscan,
+    adminFeeObj: externalConfig.opts?.fee?.movr,
+    web3: new Web3(providers.movr_provider),
+  }),
+  ONE: new EthLikeAction({
+    coinName: 'Harmony One',
+    ticker: 'ONE',
+    chainId: externalConfig.evmNetworks.ONE.chainId,
+    explorerApiName: 'onescan',
+    explorerApiKey: externalConfig.api.one_ApiKey,
+    explorerLink: externalConfig.link.oneExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.one,
+    web3: new Web3(providers.one_provider),
+  }),
+  AURETH: new EthLikeAction({
+    coinName: 'Aurora ETH',
+    ticker: 'AURETH',
+    chainId: externalConfig.evmNetworks.AURETH.chainId,
+    explorerApiName: 'aurorascan',
+    explorerApiKey: externalConfig.api.aurora_ApiKey,
+    explorerLink: externalConfig.link.auroraExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.aureth,
+    web3: new Web3(providers.aurora_provider),
+  }),
+  PHI: new EthLikeAction({
+    coinName: 'PHI',
+    ticker: 'PHI',
+    chainId: externalConfig.evmNetworks.PHI.chainId,
+    explorerApiName: ``, // нет апи - пустой список транзакций
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phiExplorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi,
+    web3: new Web3(providers.phi_provider),
+  }),
+  PHI_V2: new EthLikeAction({
+    coinName: 'PHI_V2',
+    ticker: 'PHI_V2',
+    chainId: externalConfig.evmNetworks.PHI_V2.chainId,
+    explorerApiName: 'phiscan', // ???
+    explorerApiKey: externalConfig.api?.phi_ApiKey,
+    explorerLink: externalConfig.link.phi_v2Explorer,
+    adminFeeObj: externalConfig.opts?.fee?.phi_v2,
+    web3: new Web3(providers.phi_v2_provider),
+  }),
+  AME: new EthLikeAction({
+    coinName: 'AME',
+    ticker: 'AME',
+    chainId: externalConfig.evmNetworks.AME.chainId,
+    explorerApiName: 'amescan',
+    explorerApiKey: externalConfig.api.ame_ApiKey,
+    explorerLink: externalConfig.link.amescan,
+    adminFeeObj: externalConfig.opts?.fee?.ame,
+    web3: new Web3(providers.ame_provider),
   }),
 }

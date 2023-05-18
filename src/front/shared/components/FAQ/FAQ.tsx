@@ -16,6 +16,7 @@ const NETWORK = process.env.MAINNET
   ? 'MAINNET'
   : 'TESTNET'
 
+const enabledCurrencies = config.opts.curEnabled
 const hasOwnBeforeTabs = (config?.opts?.ui?.faq?.before && (config.opts.ui.faq.before.length > 0))
 const hasOwnAfterTabs = (config?.opts?.ui?.faq?.after && (config.opts.ui.faq.after.length > 0))
 
@@ -87,39 +88,43 @@ const FAQ = function (props) {
     xdai: 0,
     ftm: 0,
     avax: 0,
+    movr: 0,
+    one: 0,
   })
 
   useEffect(() => {
     let _mounted = true
 
+
     async function fetchFees() {
       try {
-        const BYTE_IN_KB = 1024
-
-        const btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
-        const bnbGasPrice = await ethLikeHelper.bnb.estimateGasPrice()
-        const ethGasPrice = await ethLikeHelper.eth.estimateGasPrice()
-        const maticGasPrice = await ethLikeHelper.matic.estimateGasPrice()
-        const arbethGasPrice = await ethLikeHelper.arbeth.estimateGasPrice()
-        const xdaiGasPrice = await ethLikeHelper.xdai.estimateGasPrice()
-        const ftmGasPrice = await ethLikeHelper.ftm.estimateGasPrice()
-        const avaxGasPrice = await ethLikeHelper.avax.estimateGasPrice()
-
         // remove memory leak
-        if (_mounted) {
-          setFees((prevFees) => ({
-            ...prevFees,
-            // divided by 1 kb to convert it to satoshi / byte
-            btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
-            eth: convertToGwei(ethGasPrice),
-            bnb: convertToGwei(bnbGasPrice),
-            matic: convertToGwei(maticGasPrice),
-            arbeth: convertToGwei(arbethGasPrice),
-            xdai: convertToGwei(xdaiGasPrice),
-            ftm: convertToGwei(ftmGasPrice),
-            avax: convertToGwei(avaxGasPrice),
-          }))
+        if (!enabledCurrencies || enabledCurrencies.btc) {
+          const BYTE_IN_KB = 1024
+          const btcSatoshiPrice = await btcUtils.estimateFeeRate({ speed: 'fast', NETWORK })
+          if (_mounted) {
+            setFees((prevFees) => ({
+              ...prevFees,
+              // divided by 1 kb to convert it to satoshi / byte
+              btc: Math.ceil(btcSatoshiPrice / BYTE_IN_KB),
+            }))
+          }
         }
+
+        // Evm blockchains fee
+        const setEvmBlockchainFee = async (evmType: string) => {
+          const fee = await ethLikeHelper[evmType].estimateGasPrice()
+          if (_mounted) {
+            setFees((prevFees) => ({
+              ...prevFees,
+              [`${evmType}`]: convertToGwei(fee),
+            }))
+          }
+        }
+
+        Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
+          if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) setEvmBlockchainFee(evmType.toLowerCase())
+        })
       } catch (error) {
         feedback.faq.failed(`FAQ. Fetch fees error(${error.message})`)
       }
@@ -134,83 +139,41 @@ const FAQ = function (props) {
     }
   }, [tabsVisibility.SECOND_TAB])
 
+  const evmMiningFeeItems: any = []
+  Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
+    if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) {
+      evmMiningFeeItems.push({
+        ticker: evmType,
+        fee: fees[evmType.toLowerCase()],
+        unit: 'gwei',
+      })
+    }
+  })
   const miningFeeItems = [
-    {
+    ...((!enabledCurrencies || enabledCurrencies.btc) ? [{
       ticker: 'BTC',
       fee: fees.btc,
       unit: 'sat/byte',
       sourceLink: externalConfig.api.blockcypher,
-    },
-    {
-      ticker: 'ETH',
-      fee: fees.eth,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'BNB',
-      fee: fees.bnb,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'MATIC',
-      fee: fees.matic,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'ARBETH',
-      fee: fees.arbeth,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'XDAI',
-      fee: fees.xdai,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'FTM',
-      fee: fees.ftm,
-      unit: 'gwei',
-    },
-    {
-      ticker: 'AVAX',
-      fee: fees.avax,
-      unit: 'gwei',
-    },
+    }] : []),
+    ...evmMiningFeeItems,
   ]
 
+  const evmAdminFeeItems: any = []
+  Object.keys(config.enabledEvmNetworks).forEach((evmType) => {
+    if (!enabledCurrencies || enabledCurrencies[evmType.toLowerCase()]) {
+      evmAdminFeeItems.push({
+        ticker: evmType,
+        percentFee: adminFee.isEnabled(evmType),
+      })
+    }
+  })
   const adminFeeItems = [
-    {
+    ...((!enabledCurrencies || enabledCurrencies.btc) ? [{
       ticker: 'BTC',
       percentFee: adminFee.isEnabled('BTC'),
-    },
-    {
-      ticker: 'ETH',
-      percentFee: adminFee.isEnabled('ETH'),
-    },
-    {
-      ticker: 'BNB',
-      percentFee: adminFee.isEnabled('BNB'),
-    },
-    {
-      ticker: 'MATIC',
-      percentFee: adminFee.isEnabled('MATIC'),
-    },
-    {
-      ticker: 'ARBETH',
-      percentFee: adminFee.isEnabled('ARBETH'),
-    },
-    {
-      ticker: 'XDAI',
-      percentFee: adminFee.isEnabled('XDAI'),
-    },
-    {
-      ticker: 'FTM',
-      percentFee: adminFee.isEnabled('FTM'),
-    },
-    {
-      ticker: 'AVAX',
-      percentFee: adminFee.isEnabled('AVAX'),
-    },
+    }] : []),
+    ...evmAdminFeeItems,
   ]
 
   const renderTabs = (tabsData, prefix) => {

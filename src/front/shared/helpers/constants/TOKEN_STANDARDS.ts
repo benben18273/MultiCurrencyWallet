@@ -2,7 +2,7 @@ import config from 'app-config'
 
 export type TokenStandard = {
   platform: string
-  platformKey: string
+  platformKey: string // CoinGecko platform key
   standard: string
   value: string
   currency: string
@@ -11,7 +11,7 @@ export type TokenStandard = {
   hasSupportAtomicSwap: boolean
 }
 
-export default {
+const STANDARDS = {
   erc20: {
     platform: 'ethereum',
     platformKey: 'ethereum',
@@ -72,4 +72,70 @@ export default {
     explorerApiKey: config.api.avax_ApiKey,
     hasSupportAtomicSwap: false,
   },
+  erc20movr: {
+    platform: 'ethereum',
+    platformKey: 'moonriver',
+    standard: 'erc20movr',
+    value: 'erc20movr',
+    currency: 'movr',
+    explorerApi: config.api.movrscan,
+    explorerApiKey: config.api.movr_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
+  erc20one: {
+    platform: 'ethereum',
+    platformKey: 'harmony-shard-0',
+    standard: 'erc20one',
+    value: 'erc20one',
+    currency: 'one',
+    explorerApi: config.api.onescan,
+    explorerApiKey: config.api.one_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
+  erc20ame: {
+    platform: 'ethereum',
+    platformKey: '',
+    standard: 'erc20ame',
+    value: 'erc20ame',
+    currency: 'ame',
+    explorerApi: config.api.amescan,
+    explorerApiKey: config.api.ame_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
+  erc20aurora: {
+    platform: 'ethereum',
+    platformKey: 'aurora',
+    standard: 'erc20aurora',
+    value: 'erc20aurora',
+    currency: 'aureth',
+    explorerApi: config.api.aurorascan,
+    explorerApiKey: config.api.aurora_ApiKey,
+    hasSupportAtomicSwap: false,
+  },
+  phi20: {
+    platform: '',
+    platformKey: '',
+    standard: 'phi20',
+    value: 'phi20',
+    currency: 'phi',
+    explorerApi: config.api?.aurorascan || '', // ???
+    explorerApiKey: config.api?.phi_ApiKey || '', // ???
+    hasSupportAtomicSwap: false,
+  },
+  phi20_v2: {
+    platform: '',
+    platformKey: '',
+    standard: 'phi20_v2',
+    value: 'phi20_v2',
+    currency: 'phi_v2',
+    explorerApi: config.api?.aurorascan || '', // ???
+    explorerApiKey: config.api?.phi_ApiKey || '', // ???
+    hasSupportAtomicSwap: false,
+  },
 }
+
+export const EXISTING_STANDARDS = Object.values(STANDARDS)
+  .filter(({ standard }) => !!config[standard])
+  .map(({ standard }) => standard.toLowerCase())
+
+export default STANDARDS

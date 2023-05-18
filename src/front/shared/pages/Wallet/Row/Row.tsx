@@ -252,12 +252,13 @@ class Row extends Component<RowProps, RowState> {
 
   handleReceive = () => {
     const {
-      itemData: { currency, address },
+      itemData: { currency, address, standard, tokenKey },
     } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
-      currency,
+      currency: (tokenKey || currency),
       address,
+      standard,
     })
   }
 
@@ -412,7 +413,7 @@ class Row extends Component<RowProps, RowState> {
   }
 
   handleShowMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal)
+    actions.modals.open(constants.modals.SaveWalletSelectMethod)
   }
 
   connectMetamask = () => {
@@ -441,11 +442,12 @@ class Row extends Component<RowProps, RowState> {
       unconfirmedBalance,
       balanceError,
       standard,
+      isToken,
     } = itemData
 
     let nodeDownErrorShow = true
     let currencyFiatBalance
-    let currencyView = currency
+    let currencyView = (isToken) ? currency.replaceAll(`*`,``) : currency
 
     switch (currencyView) {
       case 'BTC (Multisig)':
@@ -520,7 +522,7 @@ class Row extends Component<RowProps, RowState> {
         id: 1004,
         title: (
           <FormattedMessage
-            id="WalletRow_Menu_Exchange"
+            id="menu.exchange"
             defaultMessage="Exchange"
           />
         ),

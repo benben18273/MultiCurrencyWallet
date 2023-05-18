@@ -6,4 +6,8 @@ export default [
     77,     // XDAI Testnet (Sokol)
     4002,   // FTM Testnet
     43113,  // AVAX Testnet
+    1287,  // MOVR Testnet
+    1666700000, // ONE Testnet
+    181, // AME testnet
+    1313161556, // AURETH Aurora Betanet
 ]

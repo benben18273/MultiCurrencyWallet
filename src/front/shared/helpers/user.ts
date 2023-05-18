@@ -1,42 +1,52 @@
 import store from 'redux/store'
 import { externalConfig, links, getItezUrl } from 'helpers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
+
+export const SUPPORTED_RAMP_ASSETS = {
+  BTC: 'BTC_BTC',
+
+  ETH: 'ETH_ETH',
+  '{ETH}BAT': 'ETH_BAT',
+  '{ETH}DAI': 'ETH_DAI',
+  '{ETH}ENS': 'ETH_ENS',
+  '{ETH}FEVR': 'ETH_FEVR',
+  '{ETH}LINK': 'ETH_LINK',
+  '{ETH}MANA': 'ETH_MANA',
+  '{ETH}RLY': 'ETH_RLY',
+  '{ETH}SAND': 'ETH_SAND',
+  '{ETH}USDC': 'ETH_USDC',
+  '{ETH}USDT': 'ETH_USDT',
+
+  BNB: 'BSC_BNB',
+  '{BNB}USDT': 'BSC_BUSD',
+  '{BNB}FEVR': 'BSC_FEVR',
+
+  MATIC: 'MATIC_MATIC',
+  '{MATIC}ETH': 'MATIC_ETH',
+  '{MATIC}MANA': 'MATIC_MANA',
+  '{MATIC}BAT': 'MATIC_BAT',
+  '{MATIC}DAI': 'MATIC_DAI',
+  '{MATIC}OVR': 'MATIC_OVR',
+  '{MATIC}SAND': 'MATIC_SAND',
+  '{MATIC}USDC': 'MATIC_USDC',
+
+  ARBETH: 'ARBITRUM_ETH',
+  XDAI: 'XDAI_XDAI',
+  AVAX: 'AVAX_AVAX',
+  '{AVAX}USDC': 'AVAX_USDC',
+  ONE: 'HARMONY_ONE',
+}
+
+const getEnabledEvmCurrencies = () => Object.keys(externalConfig.enabledEvmNetworks)
 
 export const getActivatedCurrencies = () => {
-  const currencies: string[] = []
+  const currencies: string[] = [...getEnabledEvmCurrencies()]
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.btc) {
     currencies.push('BTC')
     currencies.push('BTC (SMS-Protected)')
     currencies.push('BTC (PIN-Protected)')
     currencies.push('BTC (Multisig)')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.eth) {
-    currencies.push('ETH')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.bnb) {
-    currencies.push('BNB')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.matic) {
-    currencies.push('MATIC')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.arbeth) {
-    currencies.push('ARBETH')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.xdai) {
-    currencies.push('XDAI')
-  }
-
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ftm) {
-    currencies.push('FTM')
-  }
-  if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.avax) {
-    currencies.push('AVAX')
   }
 
   if (!externalConfig.opts.curEnabled || externalConfig.opts.curEnabled.ghost) {
@@ -47,10 +57,9 @@ export const getActivatedCurrencies = () => {
     currencies.push('NEXT')
   }
 
-  Object.keys(TOKEN_STANDARDS).forEach((standardKey) => {
-    Object.keys(externalConfig[standardKey]).forEach((token) => {
-
-      const baseCurrency = TOKEN_STANDARDS[standardKey].currency.toUpperCase()
+  EXISTING_STANDARDS.forEach((standard) => {
+    Object.keys(externalConfig[standard]).forEach((token) => {
+      const baseCurrency = TOKEN_STANDARDS[standard].currency.toUpperCase()
       const tokenName = token.toUpperCase()
       const tokenValue = `{${baseCurrency}}${tokenName}`
 
@@ -64,14 +73,8 @@ export const getActivatedCurrencies = () => {
 export const getWidgetCurrencies = () => {
   const { core: { hiddenCoinsList } } = store.getState()
   const widgetCurrencies = [
+    ...getEnabledEvmCurrencies(),
     'BTC',
-    'ETH',
-    'BNB',
-    'MATIC',
-    'ARBETH',
-    'XDAI',
-    'FTM',
-    'AVAX',
     'GHOST',
     'NEXT',
   ]
@@ -86,7 +89,6 @@ export const getWidgetCurrencies = () => {
   if (externalConfig.isWidget) {
     if (window?.widgetEvmLikeTokens?.length) {
       window.widgetEvmLikeTokens.forEach((token) => {
-
         const baseCurrency = TOKEN_STANDARDS[token.standard].currency.toUpperCase()
         const tokenName = token.name.toUpperCase()
         const tokenValue = `{${baseCurrency}}${tokenName}`
@@ -163,6 +165,27 @@ export const getTransakLink = (params) => {
   return exchangeUrl + parameters.join('')
 }
 
+export const getRampLink = (params) => {
+  const { address = '', currency = '' } = params
+  const rampLink = 'https://buy.ramp.network/'
+
+  const assetKey = SUPPORTED_RAMP_ASSETS[currency?.toUpperCase()]
+
+  if (!assetKey) return rampLink
+
+  const parameters = [
+    `?swapAsset=${assetKey}`,
+  ]
+
+  if (address) parameters.push(`&userAddress=${address}`)
+
+  const addCustomLogo = window?.logoUrl && window.logoUrl !== '#'
+
+  if (addCustomLogo) parameters.push(`&hostLogoUrl=${window.logoUrl}`)
+
+  return rampLink + parameters.join('')
+}
+
 export const getExternalExchangeLink = (params) => {
   const { address = '', currency = '', locale = 'en' } = params
   const { user } = store.getState()
@@ -175,6 +198,15 @@ export const getExternalExchangeLink = (params) => {
     })
   } else if (externalConfig?.opts?.buyViaCreditCardLink) {
     link = externalConfig.opts.buyViaCreditCardLink
+
+    // check the ramp payment gateway
+    if (link.match(/buy\.ramp\.network/g) && currency) {
+
+      if (SUPPORTED_RAMP_ASSETS[currency.toUpperCase()]) {
+        link = getRampLink(params)
+      }
+
+    }
 
     // checking whether the currency is available in ITEZ
     if (link.match(/itez\.com/g) && currency) {

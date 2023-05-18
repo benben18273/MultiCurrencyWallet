@@ -3,7 +3,9 @@
     "id": "menu.exchange",
     "message": "Обмен",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -115,7 +117,6 @@
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -124,7 +125,6 @@
     "message": "Переводим ...",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -282,7 +282,6 @@
     "message": "Когда вы нажмете эту кнопку, в поле появится сумма{br}, равная вашему балансу за вычетом комиссии майнера",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -394,7 +393,6 @@
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -510,7 +508,6 @@
     "message": "ВСЕ",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -520,7 +517,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -917,7 +913,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -982,7 +977,6 @@
     "message": "Некорректно указан адрес",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1033,7 +1027,6 @@
     "message": "Пожалуйста, обратите внимание: Комиссия {minAmount} {data}.{br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1041,7 +1034,6 @@
     "id": "WithdrawModal256",
     "message": "Не меньше чем {minAmount}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1049,7 +1041,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1177,7 +1168,9 @@
     "id": "FeeControler49",
     "message": "Скопировать",
     "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx",
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1313,7 +1306,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1670,6 +1662,7 @@
     "message": "Продолжить",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1762,6 +1755,7 @@
     "message": "Ready",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -1933,17 +1927,11 @@
   },
   {
     "id": "Withdrow2223",
-    "message": "SMS code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "SMS code"
   },
   {
     "id": "Withdrow2224",
-    "message": "Confirm",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "partial-tour-2",
@@ -2186,7 +2174,6 @@
     "message": "Отметить как оплаченный",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2195,7 +2182,6 @@
     "message": "Или укажите TX",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2205,7 +2191,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2294,13 +2279,6 @@
   {
     "id": "WalletRow_Menu_History",
     "message": "История",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_Exchange",
-    "message": "Обмен",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -2443,8 +2421,8 @@
     "id": "addCustomToken",
     "message": "Добавить пользовательский токен",
     "files": [
-      "src/front/shared/pages/Wallet/CurrenciesList.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2728,37 +2706,24 @@
     "id": "registerSMSMPlaceHolder",
     "message": "Cекретная фраза (12 слов)",
     "files": [
-      "src/front/shared/components/Header/Header.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
     "id": "WithdrawSMS_BroadcastError",
-    "message": "Не удалось отправить транзакцию в сеть ({errorText})",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Не удалось отправить транзакцию в сеть ({errorText})"
   },
   {
     "id": "WithdrawSMS_FailSignByMnemonic",
-    "message": "Не удалось подписать транзакцию",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Не удалось подписать транзакцию"
   },
   {
     "id": "WithdrawSMS_NotValidMnemonic",
-    "message": "Секретная фраза не валидна",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Секретная фраза не валидна"
   },
   {
     "id": "WithdrawSMS_WrongMnemonic",
-    "message": "Не правильная секретная фраза",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Не правильная секретная фраза"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -2918,7 +2883,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "Восстановить из 12 слов",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2926,7 +2892,8 @@
     "message": "Это мнемонический пароль, то есть список кодовых слов, который хранит необходимую для восстановления доступа к криптокошельку информацию. Типичная сид-фраза — 12 (и больше) слов, случайным образом подобранных из словаря, состоящего из 2048 слов.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2934,7 +2901,8 @@
     "message": "Пожалуйста, будьте осторожны! Как только вы импортируете свой seed, ваш текущий баланс будет сброшен. Сохраните текущие средства на другой кошелек.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -4016,8 +3984,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Please top up your balance before you start the swap.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4443,13 +4410,6 @@
     "message": "от отправляемого количества, но не менее",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
-    ]
-  },
-  {
-    "id": "localStorageBtnCopy",
-    "message": "Копировать",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
@@ -5968,8 +5928,308 @@
     "id": "amountNoMoreThenBalance",
     "message": "The amount must be no more than your balance",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Search",
+    "message": "Поиск",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorCannotUseThisNetwork",
+    "message": "Агрегатор не может использовать эту сеть. Пожалуйста выберете другую",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "Пожалуйста, пополните баланс {currency}",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginContinue",
+    "message": "Я понимаю",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginLater",
+    "message": "Я сохраню позже",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginNotice",
+    "message": "Сейчас мы вам покажем три секретных кода.{br}Если вы потеряете хотя-бы два из них, мы не сможем восстановить ваш кошелек",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CountSavedSecrets",
+    "message": "Сохранено {saved} из {total}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_MnemoniceDeleted",
+    "message": "You have already saved your Shamir's Secret-Share codes. {href}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ReadySaveNotice",
+    "message": "Не потеряете сохраненные коды",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShareMnemonicTitle",
+    "message": "Shamir's Secret-Share codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShowMnemonicNotice",
+    "message": "Сохраните эти коды. Если вы потеряете хотя-бы два из них, восстановить кошелек будет не возможно",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_Title",
+    "message": "Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseCopy",
+    "message": "Скопировать",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSave",
+    "message": "Сохранить",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSend",
+    "message": "Отправить",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs",
+    "message": "Restore from Secret-Sharing",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip",
+    "message": "Shamir's Secret-Sharing for Mnemonic Codes",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip_withBalance",
+    "message": "Please, be causious!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Cancel",
+    "message": "Отмена",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_SelectMethod",
+    "message": "Выберите способо восстановления",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Title",
+    "message": "Восстановление кошелька",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseMnemonic",
+    "message": "Восстановить используя 12-слов",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseShamirs",
+    "message": "Восстановить используя Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Cancel",
+    "message": "Отмена",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_SelectMethod",
+    "message": "Выберите способ",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Title",
+    "message": "Сохранение кошелька",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseMnemonic",
+    "message": "Сохранить 12-слов",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseShamirs",
+    "message": "Сохранить Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_CancelRestory",
+    "message": "Отмена",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_DoRestore",
+    "message": "Восстановить",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretOne",
+    "message": "Введите секретный код #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretTwo",
+    "message": "Введите секретный код #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_IsDoRestoring",
+    "message": "Восстанавливаем",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Ready",
+    "message": "Готово",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_ReadyNotice",
+    "message": "Теперь вы можете добавить BTC, ETH и другие валюты",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_RestoreHasError",
+    "message": "При восстановлении произошла ошибка: {errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOne",
+    "message": "Секретный код #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOneError",
+    "message": "Введите корректный секретный код #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwo",
+    "message": "Секретный код #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwoError",
+    "message": "Введите корректный секретный код #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Title",
+    "message": "Восстановление кошелька",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "Секретный Shamir's Secret-Share код #{number} от сайта {sitehost}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "Адрес вашего токена {tokenSymbol} на блокчейне {tokenBlockchain}",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   }
 ]

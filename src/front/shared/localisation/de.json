@@ -3,7 +3,9 @@
     "id": "menu.exchange",
     "message": "Exchange",
     "files": [
-      "src/front/shared/components/Header/config.tsx"
+      "src/front/shared/components/Header/config.tsx",
+      "src/front/shared/pages/Exchange/QuickSwap/Header.tsx",
+      "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
   },
   {
@@ -113,7 +115,6 @@
     "message": "In bearbeitung ...",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -292,7 +293,6 @@
     "message": "When you click this button, in the field, an amount{br} equal to your balance minus the miners commission will appear",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -348,7 +348,6 @@
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/InvoiceModal/InvoiceModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx",
       "src/front/shared/pages/Exchange/Orders/OrderBook/OrderBook.tsx"
     ]
@@ -468,7 +467,6 @@
     "message": "MAX",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -478,7 +476,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -886,7 +883,6 @@
     "files": [
       "src/front/shared/components/modals/BtcMultisignConfirmTx/BtcMultisignConfirmTx.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -951,7 +947,6 @@
     "message": "Deine Adresse ist nicht korrekt",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1002,7 +997,6 @@
     "message": "Hinweis: Gebühr ist {minAmount} {data}.{br} Dein Guthaben muss diesen Betrag überschreiten, um eine Transaktion durchführen zu können.",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1010,7 +1004,6 @@
     "id": "WithdrawModal256",
     "message": "Nicht weniger als {minAmount}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1018,7 +1011,6 @@
     "id": "WithdrawModalErrorSend",
     "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1139,7 +1131,9 @@
     "id": "FeeControler49",
     "message": "Kopieren",
     "files": [
+      "src/front/shared/components/modals/PrivateKeysModal/PrivateKeysModal.tsx",
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/pages/LocalStorage/LocalStorage.tsx",
       "src/front/shared/pages/Swap/FeeControler/FeeControler.tsx"
     ]
   },
@@ -1261,7 +1255,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -1625,6 +1618,7 @@
     "message": "Weiter",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/pages/CreateWallet/Steps/FirstStep.tsx"
     ]
   },
@@ -1773,6 +1767,7 @@
     "message": "Bereit",
     "files": [
       "src/front/shared/components/modals/SaveMnemonicModal/SaveMnemonicModal.tsx",
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx",
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
@@ -1944,17 +1939,11 @@
   },
   {
     "id": "Withdrow2223",
-    "message": "SMS Code",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "SMS Code"
   },
   {
     "id": "Withdrow2224",
-    "message": "Bestätigen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Bestätigen"
   },
   {
     "id": "partial-tour-2",
@@ -2097,7 +2086,6 @@
       "src/front/shared/components/LimitOrders/OrderPurchaseModal.tsx",
       "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2229,7 +2217,6 @@
     "message": "Als bezahlt markieren",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2238,7 +2225,6 @@
     "message": "Oder gebe den Link zur Transaktion ein (txid)",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2248,7 +2234,6 @@
     "files": [
       "src/front/shared/components/modals/WithdrawBtcMultisig/WithdrawBtcMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModal/WithdrawModal.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
     ]
   },
@@ -2337,13 +2322,6 @@
   {
     "id": "WalletRow_Menu_History",
     "message": "Verlauf",
-    "files": [
-      "src/front/shared/pages/Wallet/Row/Row.tsx"
-    ]
-  },
-  {
-    "id": "WalletRow_Menu_Exchange",
-    "message": "Exchange",
     "files": [
       "src/front/shared/pages/Wallet/Row/Row.tsx"
     ]
@@ -2493,8 +2471,8 @@
     "id": "addCustomToken",
     "message": "Benutzerdefiniertes Token hinzufügen",
     "files": [
-      "src/front/shared/pages/Wallet/CurrenciesList.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx"
+      "src/front/shared/pages/Exchange/QuickSwap/InputForm.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2760,37 +2738,24 @@
     "id": "registerSMSMPlaceHolder",
     "message": "Passphrase (12 Wörter)",
     "files": [
-      "src/front/shared/components/Header/Header.tsx",
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
+      "src/front/shared/components/Header/Header.tsx"
     ]
   },
   {
     "id": "WithdrawSMS_BroadcastError",
-    "message": "Transaktionsübertragung fehlschlagen ({errorText})",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Transaktionsübertragung fehlschlagen ({errorText})"
   },
   {
     "id": "WithdrawSMS_FailSignByMnemonic",
-    "message": "Transaktionssignatur fehlschlagen",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Transaktionssignatur fehlschlagen"
   },
   {
     "id": "WithdrawSMS_NotValidMnemonic",
-    "message": "Geheimsatz ungültig",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Geheimsatz ungültig"
   },
   {
     "id": "WithdrawSMS_WrongMnemonic",
-    "message": "Geheimsatz ungültig",
-    "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx"
-    ]
+    "message": "Geheimsatz ungültig"
   },
   {
     "id": "BtcMultisignConfirmTx_FromAddress",
@@ -2950,7 +2915,8 @@
     "id": "ImportKeys_RestoreMnemonic",
     "message": "Wiederherstellung aus 12-Wort-Seed",
     "files": [
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2958,7 +2924,8 @@
     "message": "12-Wort-Backup-Phrase – auch bekannt als 12-Wörter, „Backup“, Recovery-Phrase, Mnemonik-Seed, „Seed“ – ist ein einzigartiger, zufällig generierter Satz von Wörtern, die Ihnen beim Erstellen einer Brieftasche gegeben werden. Die Wiederherstellungsphrase wird verwendet, um alle privaten Schlüssel abzuleiten oder zu generieren, die direkt auf Ihrem Gerät verschlüsselt werden.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -2966,7 +2933,8 @@
     "message": "Bitte sei vorsichtig! Sobald du einen neuen Seed importierst, wird dein aktuelles Guthaben zurückgesetzt. Speicher dein aktuelles Guthaben in einer anderen Wallet.",
     "files": [
       "src/front/shared/components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet.tsx",
-      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx",
+      "src/front/shared/pages/Wallet/CurrenciesList.tsx"
     ]
   },
   {
@@ -4027,8 +3995,7 @@
     "id": "AlertOrderNonEnoughtBalance",
     "message": "Bitte lade dein Guthaben auf, bevor du mit dem Tausch beginnst.",
     "files": [
-      "src/front/shared/pages/Exchange/AtomicSwap.tsx",
-      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+      "src/front/shared/pages/Exchange/AtomicSwap.tsx"
     ]
   },
   {
@@ -4461,13 +4428,6 @@
     "message": "des Überweisungsbetrags, jedoch nicht weniger als",
     "files": [
       "src/front/shared/components/modals/WithdrawModal/components/FeeInfoBlock/index.tsx"
-    ]
-  },
-  {
-    "id": "localStorageBtnCopy",
-    "message": "Kopieren",
-    "files": [
-      "src/front/shared/pages/LocalStorage/LocalStorage.tsx"
     ]
   },
   {
@@ -5972,8 +5932,308 @@
     "id": "amountNoMoreThenBalance",
     "message": "The amount must be no more than your balance",
     "files": [
-      "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisig.tsx",
       "src/front/shared/components/modals/WithdrawModalMultisig/WithdrawModalMultisigUser.tsx"
+    ]
+  },
+  {
+    "id": "Search",
+    "message": "Suche",
+    "files": [
+      "src/front/shared/components/modals/AddCustomToken/index.tsx"
+    ]
+  },
+  {
+    "id": "aggregatorCannotUseThisNetwork",
+    "message": "Aggregator kann dieses Netz nicht nutzen. Bitte wählen Sie ein anderes",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "topUpCurrencyBalance",
+    "message": "Bitte laden Sie {currency} Guthaben auf",
+    "files": [
+      "src/front/shared/pages/Exchange/QuickSwap/Feedback.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginContinue",
+    "message": "Ich verstehe",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginLater",
+    "message": "Ich werde später speichern",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_BeginNotice",
+    "message": "Jetzt zeigen wir Ihnen drei Geheimcodes.{br}Wenn Sie mindestens zwei davon verlieren, können wir Ihr Wallet nicht wiederherstellen",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CountSavedSecrets",
+    "message": "Gespeichert von {saved} von {total}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_MnemoniceDeleted",
+    "message": "Sie haben Ihre Shamir's Secret-Share-Codes bereits gespeichert. {href}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ReadySaveNotice",
+    "message": "Gespeicherte Codes nicht verlieren",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShareMnemonicTitle",
+    "message": "Shamir's Secret-Share codes",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_ShowMnemonicNotice",
+    "message": "Speichern Sie diese Codes. Wenn Sie mindestens zwei davon verlieren, ist es nicht möglich, die Brieftasche wiederherzustellen",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_Title",
+    "message": "Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseCopy",
+    "message": "Kopieren",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSave",
+    "message": "Speichern",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_UseSend",
+    "message": "Schicken",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs",
+    "message": "Von Secret Sharing wiederherstellen",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip",
+    "message": "Shamirs Secret-Sharing für mnemonische Codes",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "ImportKeys_RestoreShamirs_Tooltip_withBalance",
+    "message": "Seien Sie bitte vorsichtig!",
+    "files": [
+      "src/front/shared/pages/CreateWallet/CreateWallet.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Cancel",
+    "message": "Stornieren",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_SelectMethod",
+    "message": "Wählen Sie eine Wiederherstellungsmethode",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_Title",
+    "message": "Wallet-Wiederherstellung",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseMnemonic",
+    "message": "Erholen Sie sich mit 12 Wörtern",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "RestoreWalletSelectMethod_UseShamirs",
+    "message": "Wiederherstellung mit Shamir's Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Cancel",
+    "message": "Stornieren",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_SelectMethod",
+    "message": "Wählen Sie eine Methode",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_Title",
+    "message": "Brieftasche sparen",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseMnemonic",
+    "message": "Speichern Sie 12 Wörter",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "SaveWalletSelectMethod_UseShamirs",
+    "message": "Rette Shamirs Secret-Share",
+    "files": [
+      "src/front/shared/components/modals/SaveWalletSelectMethod/SaveWalletSelectMethod.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_CancelRestory",
+    "message": "Stornieren",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_DoRestore",
+    "message": "Wiederherstellen",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretOne",
+    "message": "Geben Sie den Geheimcode #1 ein",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_EnterSecretTwo",
+    "message": "Geben Sie den Geheimcode #2 ein",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_IsDoRestoring",
+    "message": "Wiederherstellen",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Ready",
+    "message": "Bereit",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_ReadyNotice",
+    "message": "Jetzt können Sie BTC, ETH und andere Währungen hinzufügen",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_RestoreHasError",
+    "message": "Beim Wiederherstellen ist ein Fehler aufgetreten: {errorMessage}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOne",
+    "message": "Geheimcode #1",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretOneError",
+    "message": "Geben Sie den korrekten Geheimcode #1 ein",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwo",
+    "message": "Geheimcode #2",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_SecretTwoError",
+    "message": "Geben Sie den korrekten Geheimcode #2 ein",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "Shamirs_Restory_Title",
+    "message": "Wallet-Wiederherstellung",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretRestory/ShamirsSecretRestory.tsx"
+    ]
+  },
+  {
+    "id": "ShamirsSecretSave_CodeNfromSite",
+    "message": "Shamirs Secret-Share-Code #{number} von {sitehost}",
+    "files": [
+      "src/front/shared/components/modals/ShamirsSecretSave/ShamirsSecretSave.tsx"
+    ]
+  },
+  {
+    "id": "ReceiveModal_TokenAddress",
+    "message": "Dies ist Ihre {tokenSymbol}-Adresse in der {tokenBlockchain}-Blockchain",
+    "files": [
+      "src/front/shared/components/modals/ReceiveModal/ReceiveModal.tsx"
     ]
   }
 ]

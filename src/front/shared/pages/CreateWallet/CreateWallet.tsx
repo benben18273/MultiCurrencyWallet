@@ -9,7 +9,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import reducers from 'redux/core/reducers'
-import TOKEN_STANDARDS from 'helpers/constants/TOKEN_STANDARDS'
+import TOKEN_STANDARDS, { EXISTING_STANDARDS } from 'helpers/constants/TOKEN_STANDARDS'
 import links from 'helpers/links'
 import metamask from 'helpers/metamask'
 import { localisedUrl } from 'helpers/locale'
@@ -100,11 +100,15 @@ function CreateWallet(props) {
   }
 
   const handleShowMnemonic = () => {
-    actions.modals.open(constants.modals.SaveMnemonicModal)
+    actions.modals.open(constants.modals.SaveWalletSelectMethod)
   }
 
   const handleRestoreMnemonic = () => {
     actions.modals.open(constants.modals.RestoryMnemonicWallet)
+  }
+
+  const handleRestoreShamirs = () => {
+    actions.modals.open(constants.modals.ShamirsSecretRestory)
   }
 
   const validate = () => {
@@ -117,9 +121,9 @@ function CreateWallet(props) {
     }
 
     const isIgnoreSecondStep = !Object.keys(currencies).includes('BTC') || (Object.keys(currencies).includes('BTC') && hash !== '#pin')
-    const tokenStandards = Object.keys(TOKEN_STANDARDS).map((key) => TOKEN_STANDARDS[key])
+    const standardConfigs = EXISTING_STANDARDS.map((standard) => TOKEN_STANDARDS[standard])
 
-    for (const standardObj of tokenStandards) {
+    for (const standardObj of standardConfigs) {
       const standardName = standardObj.standard.toUpperCase()
       const baseCurrency = standardObj.currency.toUpperCase()
       const key = `{${baseCurrency}}${standardName}`
@@ -263,28 +267,52 @@ function CreateWallet(props) {
         </h2>
         <div styleName="buttonWrapper">
           {!noInternalWallet && (
-            <div>
-              <button onClick={handleRestoreMnemonic} type="button">
-                <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
-              </button>
-              &nbsp;
-              <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
-                <span>
-                  <FormattedMessage
-                    id="ImportKeys_RestoreMnemonic_Tooltip"
-                    defaultMessage="12-word backup phrase"
-                  />
-                  <br />
-                  <br />
-                  <div styleName="alertTooltipWrapper">
+            <>
+              <div>
+                <button onClick={handleRestoreMnemonic} type="button">
+                  <FormattedMessage id="ImportKeys_RestoreMnemonic" defaultMessage="Restore from 12-word seed" />
+                </button>
+                &nbsp;
+                <Tooltip id="ImportKeys_RestoreMnemonic_tooltip">
+                  <span>
                     <FormattedMessage
-                      id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
-                      defaultMessage="Please, be causious!"
+                      id="ImportKeys_RestoreMnemonic_Tooltip"
+                      defaultMessage="12-word backup phrase"
                     />
-                  </div>
-                </span>
-              </Tooltip>
-            </div>
+                    <br />
+                    <br />
+                    <div styleName="alertTooltipWrapper">
+                      <FormattedMessage
+                        id="ImportKeys_RestoreMnemonic_Tooltip_withBalance"
+                        defaultMessage="Please, be causious!"
+                      />
+                    </div>
+                  </span>
+                </Tooltip>
+              </div>
+              <div>
+                <button onClick={handleRestoreShamirs} type="button">
+                  <FormattedMessage id="ImportKeys_RestoreShamirs" defaultMessage="Restore from Secret-Sharing" />
+                </button>
+                &nbsp;
+                <Tooltip id="ImportKeys_RestoreShamirsc_tooltip">
+                  <span>
+                    <FormattedMessage
+                      id="ImportKeys_RestoreShamirs_Tooltip"
+                      defaultMessage="Shamir's Secret-Sharing for Mnemonic Codes"
+                    />
+                    <br />
+                    <br />
+                    <div styleName="alertTooltipWrapper">
+                      <FormattedMessage
+                        id="ImportKeys_RestoreShamirs_Tooltip_withBalance"
+                        defaultMessage="Please, be causious!"
+                      />
+                    </div>
+                  </span>
+                </Tooltip>
+              </div>
+            </>
           )}
           {!metamask.isConnected() && (
             <div>

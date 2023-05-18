@@ -88,11 +88,11 @@ function InputForm(props: InputFormProps) {
     localStorage.setItem('sawBankCardMessage', true)
   }
 
-  const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price
+  const hasFiatAmount = spendedAmount && fromWallet.infoAboutCurrency?.price_fiat
   const fiatValue = hasFiatAmount
     && utils.toMeaningfulFloatValue({
       value: spendedAmount,
-      rate: fromWallet.infoAboutCurrency.price,
+      rate: fromWallet.infoAboutCurrency.price_fiat,
     })
 
   const updateBalance = async (direction, wallet) => {
@@ -265,7 +265,6 @@ function InputForm(props: InputFormProps) {
         {showFiatExchangeBtn && (
           <>
             <Button
-              id="buyViaBankCardButton"
               className="buyViaBankCardButton"
               styleName="fiatExchangeBtn"
               pending={isPending}

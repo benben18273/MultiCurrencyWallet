@@ -23,6 +23,7 @@ import BalanceForm from 'components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import styles from './Wallet.scss'
 
+const host = window.location.hostname || document.location.host
 const isWidgetBuild = config && config.isWidget
 
 @connect(
@@ -35,12 +36,18 @@ const isWidgetBuild = config && config.isWidget
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
+      movrData,
+      oneData,
+      ameData,
       avaxData,
       btcData,
       ghostData,
       nextData,
+      phiData,
+      phi_v2Data,
       tokensData,
       btcMultisigSMSData,
       btcMultisigUserData,
@@ -58,12 +65,18 @@ const isWidgetBuild = config && config.isWidget
       bnbData,
       maticData,
       arbethData,
+      aurethData,
       xdaiData,
       ftmData,
       avaxData,
+      movrData,
+      oneData,
+      ameData,
       btcData,
       ghostData,
       nextData,
+      phiData,
+      phi_v2Data,
       ...Object.keys(tokensData).map((k) => tokensData[k]),
     ]
 
@@ -81,9 +94,15 @@ const isWidgetBuild = config && config.isWidget
         bnbData,
         maticData,
         arbethData,
+        aurethData,
         xdaiData,
         ftmData,
         avaxData,
+        movrData,
+        oneData,
+        ameData,
+        phiData,
+        phi_v2Data,
         metamaskData: {
           ...metamaskData,
           currency: 'ETH Metamask',
@@ -129,6 +148,7 @@ class Wallet extends PureComponent<any, any> {
       enabledCurrencies: user.getActivatedCurrencies(),
       multisigPendingCount,
     }
+    window.testSaveShamirsSecrets = () => { this.testSaveShamirsSecrets() }
   }
 
   handleConnectWallet() {
@@ -352,6 +372,11 @@ class Wallet extends PureComponent<any, any> {
     return 0
   }
 
+  testSaveShamirsSecrets = () => {
+    actions.modals.open(constants.modals.ShamirsSecretSave)
+  }
+  
+  
   addFiatBalanceInUserCurrencyData = (currencyData) => {
     currencyData.forEach((wallet) => {
       wallet.fiatBalance = this.returnFiatBalanceByWallet(wallet)
@@ -412,9 +437,10 @@ class Wallet extends PureComponent<any, any> {
     const { coinsData, coinsData: ethData } = this.props
 
     this.syncTimer = setTimeout(async () => {
-      if (config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
+      if (host === 'localhost' || config?.entry !== 'mainnet' || !metamask.isCorrectNetwork()) {
         return
       }
+
       if (isOneHourAfter || isFirstCheck) {
         localStorage.setItem(constants.localStorage.lastCheckBalance, now)
         try {

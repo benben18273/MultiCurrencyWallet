@@ -26,7 +26,10 @@ import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
 import SaveMnemonicModal from "components/modals/SaveMnemonicModal/SaveMnemonicModal"
 import SaveKeysModal from "components/modals/SaveKeysModal/SaveKeysModal"
 
+import RestoreWalletSelectMethod from "components/modals/RestoreWalletSelectMethod/RestoreWalletSelectMethod"
+import ShamirsSecretRestory from "components/modals/ShamirsSecretRestory/ShamirsSecretRestory"
 import RestoryMnemonicWallet from "components/modals/RestoryMnemonicWallet/RestoryMnemonicWallet"
+
 
 const routes = (
   <ScrollToTop>
@@ -36,11 +39,15 @@ const routes = (
       <Route path={`${links.atomicSwap}/:orderId`} component={SwapComponent} />
       <Route path={`${links.turboSwap}/:orderId`} component={TurboSwap} />
 
-      <Route path={`/:ticker(btc|eth|bnb|matic|arbeth|xdai|ftm|avax|ghost|next)/tx/:tx?`} component={Transaction} />
+      <Route path={`/:ticker(btc|eth|bnb|matic|arbeth|aureth|xdai|ftm|avax|movr|one|phi|phi_v2|ame|ghost|next)/tx/:tx?`} component={Transaction} />
       <Route path={`/:token(token)/:ticker/tx/:tx?`} component={Transaction} />
 
       <Route
-        path={`/:ticker(btc|eth|bnb|matic|arbeth|xdai|ftm|avax|ghost|next)/:address/:action(receive|send)?`}
+        path={`/:ticker(btc|eth|bnb|matic|arbeth|aureth|xdai|ftm|avax|movr|one|phi|phi_v2|ame|ghost|next)/:address/:action(receive|send)?`}
+        component={CurrencyWallet}
+      />
+      <Route
+        path={`/:token(token)/:ticker/:address/:action(receive|send)?`}
         component={CurrencyWallet}
       />
       <Route path={`/:token(token)/:ticker/:address`} component={CurrencyWallet} />
@@ -61,7 +68,9 @@ const routes = (
 
       <Route exact path={`${links.createWallet}`} component={CreateWallet} />
       <Route path={`${links.createWallet}/:currency`} component={CreateWallet} />
-      <Route path={`${links.restoreWallet}`} component={RestoryMnemonicWallet} />
+      <Route path={`${links.restoreWallet}`} component={RestoreWalletSelectMethod} />
+      <Route path={`${links.restoreWalletMnemonic}`} component={RestoryMnemonicWallet} />
+      <Route path={`${links.restoreWalletShamirs}`} component={ShamirsSecretRestory} />
 
       <Route path={`${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />

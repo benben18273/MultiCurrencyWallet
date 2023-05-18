@@ -94,12 +94,15 @@ class CurrencyWallet extends Component<any, any> {
       itemCurrency = itemCurrency[0]
 
       //@ts-ignore
-      const { currency, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
+      const { currency, standard, tokenKey, address, contractAddress, decimals, balance, infoAboutCurrency } = itemCurrency
       const hasCachedData = lsDataCache.get(`TxHistory_${getCurrencyKey(currency, true).toLowerCase()}_${walletAddress}`)
 
+console.log('>>> standard, tokenKey', standard, tokenKey)
       this.state = {
         itemCurrency,
         address,
+        standard,
+        tokenKey,
         walletAddress,
         balance,
         decimals,
@@ -122,6 +125,10 @@ class CurrencyWallet extends Component<any, any> {
     const {
       currency,
       itemCurrency,
+      itemCurrency: {
+        tokenKey,
+        standard,
+      },
       token,
       balance,
       infoAboutCurrency,
@@ -145,8 +152,8 @@ class CurrencyWallet extends Component<any, any> {
       actions.user.getBalances()
     }
 
-    if (token && itemCurrency.standard) {
-      actions[itemCurrency.standard].getBalance(currency.toLowerCase(), walletAddress).then((balance) => {
+    if (token && standard) {
+      actions[standard].getBalance(currency.toLowerCase(), walletAddress).then((balance) => {
         this.setState({
           balance,
         })
@@ -168,7 +175,7 @@ class CurrencyWallet extends Component<any, any> {
     }
 
     const targetCurrency = getCurrencyKey(currency.toLowerCase(), true)
-    const firstUrlPart = itemCurrency.tokenKey ? `/token/${itemCurrency.tokenKey}` : `/${targetCurrency}`
+    const firstUrlPart = tokenKey ? `/token/${tokenKey}` : `/${targetCurrency}`
     const withdrawUrl = `${firstUrlPart}/${address}/send`
     const receiveUrl = `${firstUrlPart}/${address}/receive`
 
@@ -190,8 +197,9 @@ class CurrencyWallet extends Component<any, any> {
 
     if (this.props.history.location.pathname.toLowerCase() === receiveUrl.toLowerCase()) {
       actions.modals.open(constants.modals.ReceiveModal, {
-        currency,
+        currency: (tokenKey || currency),
         address,
+        standard,
       })
     }
   }
@@ -254,6 +262,7 @@ class CurrencyWallet extends Component<any, any> {
           balance,
           infoAboutCurrency,
           tokenKey,
+          standard,
         } = itemCurrency
         const {
           txItems: oldTxItems,
@@ -283,8 +292,8 @@ class CurrencyWallet extends Component<any, any> {
               if (activeCurrency.toUpperCase() !== activeFiat) {
                 actions.user.pullActiveCurrency(currency.toLowerCase())
               }
-              if (token && itemCurrency.standard) {
-                actions[itemCurrency.standard].getBalance(currency.toLowerCase(), address).then((balance) => {
+              if (token && standard) {
+                actions[standard].getBalance(currency.toLowerCase(), address).then((balance) => {
                   this.setState({
                     balance,
                   })
@@ -323,8 +332,9 @@ class CurrencyWallet extends Component<any, any> {
 
             if (currentUrl === receiveUrl.toLowerCase()) {
               actions.modals.open(constants.modals.ReceiveModal, {
-                currency,
+                currency: (tokenKey || currency),
                 address,
+                standard,
               })
             }
           }
@@ -389,11 +399,19 @@ class CurrencyWallet extends Component<any, any> {
   }
 
   handleReceive = () => {
-    const { currency, address } = this.state
-
-    actions.modals.open(constants.modals.ReceiveModal, {
+    const {
       currency,
       address,
+      itemCurrency: {
+        tokenKey,
+        standard,
+      },
+    } = this.state
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency: (tokenKey || currency),
+      address,
+      standard,
     })
   }
 
@@ -483,6 +501,10 @@ class CurrencyWallet extends Component<any, any> {
     const {
       currency,
       itemCurrency,
+      itemCurrency: {
+        isToken,
+        tokenKey,
+      },
       balance,
       infoAboutCurrency,
       txItems,
@@ -491,6 +513,7 @@ class CurrencyWallet extends Component<any, any> {
     } = this.state
 
     let currencyName = currency.toLowerCase()
+    let currencyViewName = (isToken) ? currency.replaceAll(`*`,``).toLowerCase() : currency.toLowerCase()
 
     switch (currencyName) {
       case 'btc (multisig)':
@@ -502,9 +525,10 @@ class CurrencyWallet extends Component<any, any> {
     txHistory = txItems || txHistory
 
     if (txHistory) {
+      
       txHistory = txHistory.filter((tx) => {
         if (tx?.type) {
-          return tx.type.toLowerCase() === currencyName
+          return (isToken) ? (tx.tokenKey === tokenKey) : (tx.type.toLowerCase() === currencyName)
         }
         return false
       })
@@ -587,6 +611,7 @@ class CurrencyWallet extends Component<any, any> {
                 itemCurrency.tokenKey || currencyName
               )}
               currency={currency.toLowerCase()}
+              currencyView={currencyViewName}
               singleWallet={true}
               multisigPendingCount={multisigPendingCount}
             />

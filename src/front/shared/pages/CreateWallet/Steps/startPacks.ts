@@ -3,8 +3,6 @@ import config from 'helpers/externalConfig'
 const { curEnabled } = config.opts
 const onlyEvmWallets = !!(config?.opts?.ui?.disableInternalWallet)
 
-// TODO: Move it in a better place
-
 export const defaultPack = [
   ...((!curEnabled || curEnabled.btc) && !onlyEvmWallets ? [{ name: 'BTC', capture: 'Bitcoin' }] : []),
 
@@ -19,8 +17,19 @@ export const defaultPack = [
   ...(!curEnabled || curEnabled.xdai ? [{ name: 'XDAI', capture: 'xDai' }] : []),
 
   ...(!curEnabled || curEnabled.ftm ? [{ name: 'FTM', capture: 'Fantom' }] : []),
-  
-  ...(!curEnabled || curEnabled.ftm ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
+
+  ...(!curEnabled || curEnabled.avax ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
+
+  ...(!curEnabled || curEnabled.movr ? [{ name: 'MOVR', capture: 'Moonriver' }] : []),
+
+  ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony' }] : []),
+
+  ...(!curEnabled || curEnabled.ame ? [{ name: 'AME', capture: 'AME Chain' }] : []),
+
+  ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
+
+  ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
+  ...(!curEnabled || curEnabled.phi_v2 ? [{ name: 'PHI_V2', capture: 'PHI_V2' }] : []),
 
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
@@ -43,6 +52,12 @@ export const defaultPack = [
   ...(config.erc20xdai ? [{ name: 'ERC20XDAI', capture: 'Token', baseCurrency: 'XDAI' }] : []),
   ...(config.erc20ftm ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
   ...(config.erc20avax ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
+  ...(config.erc20movr ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
+  ...(config.erc20one ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
+  ...(config.erc20ame ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
+  ...(config.erc20aurora ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(config.phi20 ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
+  ...(config.phi20_v2 ? [{ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' }] : []),
 ]
 
 export const widgetPack = [
@@ -60,6 +75,18 @@ export const widgetPack = [
   ...((config.erc20ftm && (!curEnabled || curEnabled.ftm)) ? [{ name: 'ERC20FTM', capture: 'Token', baseCurrency: 'FTM' }] : []),
   ...(!curEnabled || curEnabled.avax ? [{ name: 'AVAX', capture: 'Avalanche' }] : []),
   ...((config.erc20avax && (!curEnabled || curEnabled.avax)) ? [{ name: 'ERC20AVAX', capture: 'Token', baseCurrency: 'AVAX' }] : []),
+  ...(!curEnabled || curEnabled.movr ? [{ name: 'MOVR', capture: 'Moonriver' }] : []),
+  ...((config.erc20movr && (!curEnabled || curEnabled.movr)) ? [{ name: 'ERC20MOVR', capture: 'Token', baseCurrency: 'MOVR' }] : []),
+  ...(!curEnabled || curEnabled.one ? [{ name: 'ONE', capture: 'Harmony One' }] : []),
+  ...((config.erc20one && (!curEnabled || curEnabled.one)) ? [{ name: 'ERC20ONE', capture: 'Token', baseCurrency: 'ONE' }] : []),
+  ...(!curEnabled || curEnabled.ame ? [{ name: 'AME', capture: 'AME Chain' }] : []),
+  ...((config.erc20ame && (!curEnabled || curEnabled.ame)) ? [{ name: 'ERC20AME', capture: 'Token', baseCurrency: 'AME' }] : []),
+  ...(!curEnabled || curEnabled.aureth ? [{ name: 'AURETH', capture: 'Aurora ETH' }] : []),
+  ...((config.erc20aurora && (!curEnabled || curEnabled.aureth)) ? [{ name: 'ERC20AURORA', capture: 'Token', baseCurrency: 'AURETH' }] : []),
+  ...(!curEnabled || curEnabled.phi ? [{ name: 'PHI', capture: 'PHI' }] : []),
+  ...(!curEnabled || curEnabled.phi_v2 ? [{ name: 'PHI_V2', capture: 'PHI_V2' }] : []),
+  ...((config.phi20 && (!curEnabled || curEnabled.phi)) ? [{ name: 'PHI20', capture: 'Token', baseCurrency: 'PHI' }] : []),
+  ...((config.phi20_v2 && (!curEnabled || curEnabled.phi_v2)) ? [{ name: 'PHI20_V2', capture: 'Token', baseCurrency: 'PHI_V2' }] : []),
   ...((!curEnabled || curEnabled.ghost) && !onlyEvmWallets ? [{ name: 'GHOST', capture: 'Ghost' }] : []),
   ...((!curEnabled || curEnabled.next) && !onlyEvmWallets ? [{ name: 'NEXT', capture: 'NEXT.coin' }] : []),
 ]

@@ -89,6 +89,11 @@ export default {
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.arbeth,
     web3: new Web3(config.web3.arbitrum_provider),
   }),
+  aureth: new ethLikeHelper({
+    currency: 'AURETH',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.aureth,
+    web3: new Web3(config.web3.aurora_provider),
+  }),
   xdai: new ethLikeHelper({
     currency: 'XDAI',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
@@ -103,5 +108,30 @@ export default {
     currency: 'AVAX',
     defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
     web3: new Web3(config.web3.avax_provider),
+  }),
+  movr: new ethLikeHelper({
+    currency: 'MOVR',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.movr_provider),
+  }),
+  one: new ethLikeHelper({
+    currency: 'ONE',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.one_provider),
+  }),
+  ame: new ethLikeHelper({
+    currency: 'AME',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.evmLike,
+    web3: new Web3(config.web3.ame_provider),
+  }),
+  phi: new ethLikeHelper({
+    currency: 'PHI',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.phi,
+    web3: new Web3(config.web3.phi_provider),
+  }),
+  phi_v2: new ethLikeHelper({
+    currency: 'PHI_V2',
+    defaultParams: DEFAULT_CURRENCY_PARAMETERS.phi_v2,
+    web3: new Web3(config.web3.phi_v2_provider),
   }),
 }
